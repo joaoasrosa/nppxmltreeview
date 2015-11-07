@@ -1,6 +1,6 @@
 # Notepadd++ XML Treeview Pluhin
 
-[![Build status](https://ci.appveyor.com/api/projects/status/djx4s272r5wi61y6?svg=true)](https://ci.appveyor.com/project/joaoasrosa/nppxmltreeview)
+[![Build status](https://ci.appveyor.com/api/projects/status/mvhq920dyybn775a?svg=true)](https://ci.appveyor.com/project/joaoasrosa/nppxmltreeview)
 
 An Notepadd++ XML Treeview Plugin. 
 Since the lack of an treeview to visualize XML, this plugin fill the gap. Base on C# displays the XML document as treeview.
