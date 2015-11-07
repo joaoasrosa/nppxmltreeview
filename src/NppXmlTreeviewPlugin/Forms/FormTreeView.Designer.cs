@@ -38,14 +38,15 @@
             this.treeView.Name = "treeView";
             this.treeView.Size = new System.Drawing.Size(284, 262);
             this.treeView.TabIndex = 0;
+            this.treeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseClick);
             // 
-            // frmMyDlg
+            // FormTreeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Controls.Add(this.treeView);
-            this.Name = "frmMyDlg";
+            this.Name = "FormTreeView";
             this.Text = "frmMyDlg";
             this.ResumeLayout(false);
 
