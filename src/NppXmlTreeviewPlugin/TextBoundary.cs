@@ -1,4 +1,6 @@
-﻿namespace NppXmlTreeviewPlugin
+﻿using NppXmlTreeviewPlugin.Parsers;
+
+namespace NppXmlTreeviewPlugin
 {
     /// <summary>
     /// Struct to store the text boundary for the treenode.
@@ -8,22 +10,22 @@
         /// <summary>
         /// Default struct constructor.
         /// </summary>
-        /// <param name="startIndex">The start index.</param>
-        /// <param name="endIndex">The end index.</param>
-        public TextBoundary(int startIndex, int endIndex)
+        /// <param name="startNodePosition">The start node position.</param>
+        /// <param name="endNodePosition">The end index.</param>
+        public TextBoundary(NppXmlNodePosition startNodePosition, NppXmlNodePosition endNodePosition)
         {
-            StartIndex = startIndex;
-            EndIndex = endIndex;
+            this.StartNodePosition = startNodePosition;
+            this.EndNodePosition = endNodePosition;
         }
 
         /// <summary>
-        /// The start index of the text.
+        /// The start node position of the text.
         /// </summary>
-        public int StartIndex { get; private set; }
+        public NppXmlNodePosition StartNodePosition { get; private set; }
 
         /// <summary>
-        /// The end index of the text.
+        /// The end node position of the text.
         /// </summary>
-        public int EndIndex { get; private set; }
+        public NppXmlNodePosition EndNodePosition { get; private set; }
     }
 }

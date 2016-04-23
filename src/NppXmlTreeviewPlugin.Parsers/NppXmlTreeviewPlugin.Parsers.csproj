@@ -43,6 +43,7 @@
       <Link>VersionInfo.cs</Link>
     </Compile>
     <Compile Include="NppXmlNode.cs" />
+    <Compile Include="NppXmlNodePosition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

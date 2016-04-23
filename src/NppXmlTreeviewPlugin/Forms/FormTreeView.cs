@@ -2,10 +2,8 @@
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml;
 using NppPluginNET;
 using NppXmlTreeviewPlugin.Parsers;
-using NppXmlTreviewPlugin.Extensions;
 
 namespace NppXmlTreeviewPlugin.Forms
 {
@@ -53,7 +51,7 @@ namespace NppXmlTreeviewPlugin.Forms
             {
                 // Clear the treeview.
                 this.treeView.Invoke(new ClearNodesDelegate(ClearNodes));
-                
+
                 NppXmlNode node;
 
                 // Do validations.
@@ -95,7 +93,7 @@ namespace NppXmlTreeviewPlugin.Forms
             for (var i = 0; i < inXmlNode.ChildNodes.Count; i++)
             {
                 var xNode = inXmlNode.ChildNodes[i];
-                
+
                 this.treeView.Invoke(new AddNodeToNodeDelegate(AddNodeToNode),
                     new TreeNode(xNode.Name)
                     {
@@ -154,8 +152,15 @@ namespace NppXmlTreeviewPlugin.Forms
 
             // Highlight the text.
             var currentScintilla = PluginBase.GetCurrentScintilla();
-            Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONSTART, textBoundary.StartIndex, 0);
-            Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONEND, textBoundary.EndIndex, 0);
+
+            var startLinePos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_POSITIONFROMLINE,
+                textBoundary.StartNodePosition.LineNumber, 0);
+            var endLinePos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETLINEENDPOSITION,
+                textBoundary.EndNodePosition.LineNumber, 0);
+
+            Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONSTART, 
+                startLinePos + textBoundary.StartNodePosition.LinePosition, 0);
+            Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONEND, endLinePos, 0);
             Win32.SendMessage(currentScintilla, SciMsg.SCI_SCROLLCARET, 0, 0);
         }
 
