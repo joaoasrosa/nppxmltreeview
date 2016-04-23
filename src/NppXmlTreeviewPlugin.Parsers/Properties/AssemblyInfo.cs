@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NppXmlTreeviewPlugin")]
+[assembly: AssemblyTitle("NppXmlTreeviewPlugin.Parsers")]
 [assembly: AssemblyDescription("A Notepad++ TreeView plugin")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("João Rosa")]
-[assembly: AssemblyProduct("NppXmlTreeviewPlugin")]
+[assembly: AssemblyProduct("NppXmlTreeviewPlugin.Parsers")]
 [assembly: AssemblyCopyright("Copyright © João Rosa 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,4 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("31492674-6fe0-485c-91f0-2e17244588ff")]
+[assembly: Guid("eaba4132-6e8c-41ec-b6f0-666efca5439a")]
+
+[assembly: InternalsVisibleTo("NppXmlTreeviewPlugin.Tests")]
+

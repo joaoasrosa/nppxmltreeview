@@ -78,8 +78,20 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NppXmlTreeviewPlugin.Parsers\NppXmlTreeviewPlugin.Parsers.csproj">
+      <Project>{eaba4132-6e8c-41ec-b6f0-666efca5439a}</Project>
+      <Name>NppXmlTreeviewPlugin.Parsers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)\DllExport\NppPlugin.DllExport.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>MKDIR NppXmlTreeviewPlugin
+XCOPY /Y NppXmlTreeviewPlugin.Parsers.* NppXmlTreeviewPlugin
+DEL NppXmlTreeviewPlugin.Parsers.*
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

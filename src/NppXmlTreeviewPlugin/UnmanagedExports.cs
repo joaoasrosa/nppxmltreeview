@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using NppPluginNET;
 using NppPlugin.DllExport;
+using NppPluginNET;
 
 namespace NppXmlTreeviewPlugin
 {
