@@ -153,14 +153,15 @@ namespace NppXmlTreeviewPlugin.Forms
             // Highlight the text.
             var currentScintilla = PluginBase.GetCurrentScintilla();
 
-            var startLinePos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_POSITIONFROMLINE,
+            var startLineStartPos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_POSITIONFROMLINE,
                 textBoundary.StartNodePosition.LineNumber, 0);
-            var endLinePos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETLINEENDPOSITION,
+            var endLineStartPos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_POSITIONFROMLINE,
                 textBoundary.EndNodePosition.LineNumber, 0);
 
             Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONSTART, 
-                startLinePos + textBoundary.StartNodePosition.LinePosition, 0);
-            Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONEND, endLinePos, 0);
+                startLineStartPos + textBoundary.StartNodePosition.LinePosition, 0);
+            Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONEND, 
+                endLineStartPos + textBoundary.EndNodePosition.LinePosition, 0);
             Win32.SendMessage(currentScintilla, SciMsg.SCI_SCROLLCARET, 0, 0);
         }
 

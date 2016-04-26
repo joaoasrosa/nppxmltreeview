@@ -15,7 +15,7 @@ namespace NppXmlTreeviewPlugin.Parsers
         internal NppXmlNodePosition(XmlTextReader xmlTextReader, bool isEndPosition = false)
         {
             this.LineNumber = xmlTextReader.LineNumber - 1;
-            this.LinePosition = xmlTextReader.LinePosition + (isEndPosition ? 3 + xmlTextReader.Name.Length : -2);
+            this.LinePosition = xmlTextReader.LinePosition + (isEndPosition ? xmlTextReader.Name.Length : -2);
         }
 
         /// <summary>

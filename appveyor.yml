@@ -10,6 +10,7 @@ assembly_info:
   assembly_informational_version: '{version}'
 before_build:
 - cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"'
+- nuget restore
 build:
   verbosity: minimal
 after_build:

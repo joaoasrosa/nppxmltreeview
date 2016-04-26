@@ -102,7 +102,10 @@ namespace NppXmlTreeviewPlugin.Parsers
                     
                     var sibling = new NppXmlNode(xmlTextReader.Name, new NppXmlNodePosition(xmlTextReader), node.Parent);
                     node.Parent.ChildNodes.Add(sibling);
-                    
+
+                    // Can be a single node.
+                    sibling.EndPosition = new NppXmlNodePosition(xmlTextReader, true);
+
                     ReadChildOrSibling(xmlTextReader, xmlTextReader.Depth, sibling);
 
                     sibling.EndPosition = new NppXmlNodePosition(xmlTextReader, true);
@@ -118,7 +121,10 @@ namespace NppXmlTreeviewPlugin.Parsers
                 // It's a child.
                 var child = new NppXmlNode(xmlTextReader.Name, new NppXmlNodePosition(xmlTextReader), node);
                 node.ChildNodes.Add(child);
-                
+
+                // Can be a single node.
+                child.EndPosition = new NppXmlNodePosition(xmlTextReader, true);
+
                 ReadChildOrSibling(xmlTextReader, xmlTextReader.Depth, child);
 
                 child.EndPosition = new NppXmlNodePosition(xmlTextReader, true);
