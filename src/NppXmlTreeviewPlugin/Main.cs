@@ -145,29 +145,23 @@ namespace NppXmlTreeviewPlugin
             {
                 using (TextWriter w = new StreamWriter("c:\\temp\\log.text", true))
                 {
-                    w.WriteLine(string.Format(
-                        "\n{0}-{1}-{2} {3}-{4}-{5}:\n" +
-                        "====================",
-                        DateTime.Now.Year,
-                        DateTime.Now.Month.ToString("00"),
-                        DateTime.Now.Day.ToString("00"),
-                        DateTime.Now.Hour.ToString("00"),
-                        DateTime.Now.Minute.ToString("00"),
-                        DateTime.Now.Second.ToString("00")));
+                    w.WriteLine(
+                        $"\n{DateTime.Now.Year}-{DateTime.Now.Month.ToString("00")}-{DateTime.Now.Day.ToString("00")} {DateTime.Now.Hour.ToString("00")}-{DateTime.Now.Minute.ToString("00")}-{DateTime.Now.Second.ToString("00")}:\n" +
+                        "====================");
                     w.WriteLine(ex.Message);
                     w.WriteLine(ex.StackTrace);
                 }
-                MessageBox.Show("Owing to unfortunate circumstances an error with the following message occured:\n\n"
-                                + "\"" + ex.Message + "\"\n\n"
-                                + "Hence a logfile has been written to the SourceCookifier folder.\n"
-                                + "Please post its content in the forum, if you think it's worth being fixed.\n"
-                                + "Sorry for the inconvenience.",
-                                "SourceCookifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Owing to unfortunate circumstances an error with the following message occured:\n\n" +
+                    $"\"{ex.Message}\"\n\n" + "Hence a logfile has been written to the SourceCookifier folder.\n" +
+                    "Please post its content in the forum, if you think it's worth being fixed.\n" +
+                    "Sorry for the inconvenience.",
+                                "NppXmlTreeview", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error while attempting to write error logfile:\n" + e.Message,
-                                "SourceCookifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error while attempting to write error logfile:\n{e.Message}",
+                                "NppXmlTreeview", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -185,9 +179,7 @@ namespace NppXmlTreeviewPlugin
                 {
                     StackTrace stackTrace = new StackTrace();
                     MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-                    w.WriteLine(string.Format("{0}:{1:000} <{2}> {3}[{4}] {5}",
-                        DateTime.Now.ToLongTimeString(), DateTime.Now.Millisecond, TRACEPID,
-                        new String(' ', (stackTrace.FrameCount - 1) * 3), methodBase.Name, msg));
+                    w.WriteLine("{0}:{1:000} <{2}> {3}[{4}] {5}", DateTime.Now.ToLongTimeString(), DateTime.Now.Millisecond, TRACEPID, new String(' ', (stackTrace.FrameCount - 1) * 3), methodBase.Name, msg);
                 }
             }
             catch (Exception ex)
@@ -195,8 +187,8 @@ namespace NppXmlTreeviewPlugin
                 if (!TRACEERRORSHOWN)
                 {
                     TRACEERRORSHOWN = true;
-                    MessageBox.Show("Error while attempting to write trace file:\n" + ex.Message,
-                                    "SourceCookifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error while attempting to write trace file:\n{ex.Message}",
+                                    "NppXmlTreeview", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

@@ -14,7 +14,7 @@ before_build:
 build:
   verbosity: minimal
 after_build:
-- ps: 7z a NppXMLTreeviewPlugin.zip c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\Release\Plugin
+- ps: 7z a NppXMLTreeviewPlugin.zip c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\Release\NppXmlTreeviewPlugin.dll c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\Release\NppXmlTreeviewPlugin
 artifacts:
 - path: NppXmlTreeviewPlugin.zip
   name: nppxmltreeview

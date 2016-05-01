@@ -57,58 +57,47 @@ namespace NppXmlTreeviewPlugin.Forms
         /// <param name="e">The event arguments.</param>
         private void BackgroundWorker_UpdateUserInterfaceDoWork(object sender, DoWorkEventArgs e)
         {
-            try
+            if (this.treeView.InvokeRequired)
             {
-                if (this.treeView.InvokeRequired)
-                {
-                    this.treeView.Invoke(new ClearNodesDelegate(ClearNodes));
-                }
-                else
-                {
-                    ClearNodes();
-                }
-
-                NppXmlNode node;
-
-                // Do validations.
-                if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out node))
-                {
-                    return;
-                }
-
-                if (this.treeView.InvokeRequired)
-                {
-                    this.treeView.Invoke(new AddNodeToTreeViewDelegate(AddNodeToTreeView), GenerateTreeNode(node));
-                }
-                else
-                {
-                    this.treeView.Nodes.Add(GenerateTreeNode(node));
-                }
-
-                // Add the rest of the nodes.
-                var treeNode = this.treeView.Nodes[0];
-                AddNode(node, treeNode);
-
-                // Finish up the operation.
-                if (this.treeView.InvokeRequired)
-                {
-                    this.treeView.Invoke(new ExpandTreeViewDelegate(ExpandTreeView));
-                }
-                else
-                {
-                    ExpandTreeView();
-                }
+                this.treeView.Invoke(new ClearNodesDelegate(ClearNodes));
             }
-            catch (Exception ex)
+            else
             {
-                // TODO: log it somewhere
-                Main.ErrorOut(ex);
-                throw;
+                ClearNodes();
             }
-            finally
+
+            NppXmlNode node;
+
+            // Do validations.
+            if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out node))
             {
-                this._workerIsRunning = false;
+                return;
             }
+
+            if (this.treeView.InvokeRequired)
+            {
+                this.treeView.Invoke(new AddNodeToTreeViewDelegate(AddNodeToTreeView), GenerateTreeNode(node));
+            }
+            else
+            {
+                this.treeView.Nodes.Add(GenerateTreeNode(node));
+            }
+
+            // Add the rest of the nodes.
+            var treeNode = this.treeView.Nodes[0];
+            AddNode(node, treeNode);
+
+            // Finish up the operation.
+            if (this.treeView.InvokeRequired)
+            {
+                this.treeView.Invoke(new ExpandTreeViewDelegate(ExpandTreeView));
+            }
+            else
+            {
+                ExpandTreeView();
+            }
+
+            this._workerIsRunning = false;
         }
 
         /// <summary>
