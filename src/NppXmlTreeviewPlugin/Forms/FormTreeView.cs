@@ -2,19 +2,24 @@
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml;
 using NppPluginNET;
-using NppXmlTreviewPlugin.Extensions;
+using NppXmlTreeviewPlugin.Parsers;
+using NppXmlTreeviewPlugin.Properties;
 
 namespace NppXmlTreeviewPlugin.Forms
 {
     public partial class FormTreeView : Form
     {
+        private bool _expanded;
+        private bool _workerIsRunning;
+
         #region CONSTRUCTORS
 
         public FormTreeView()
         {
             InitializeComponent();
+
+            this.TooltipButtonToogle.SetToolTip(this.ButtonToggle, "Collapse treeview");
 
             // Get the values from the open document.
             UpdateUserInterface();
@@ -22,124 +27,114 @@ namespace NppXmlTreeviewPlugin.Forms
 
         #endregion
 
-
         #region PUBLIC METHODS
 
         /// <summary>
-        /// Updates the plugin user interface.
+        ///     Updates the plugin user interface.
         /// </summary>
         public void UpdateUserInterface()
         {
-            // Restart the counter.
-            this._lastPosition = 0;
+            if (this._workerIsRunning)
+            {
+                return;
+            }
 
             // Start the background worker.
             var backgroundWorker = new BackgroundWorker();
-            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            backgroundWorker.DoWork += BackgroundWorker_UpdateUserInterfaceDoWork;
             backgroundWorker.RunWorkerAsync();
+            this._workerIsRunning = true;
         }
 
         #endregion
 
-
         #region PRIVATE METHODS
 
         /// <summary>
-        /// Background worker method to do the async work.
+        ///     Background worker method to do the user interface updated.
         /// </summary>
         /// <param name="sender">The background worker object.</param>
         /// <param name="e">The event arguments.</param>
-        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void BackgroundWorker_UpdateUserInterfaceDoWork(object sender, DoWorkEventArgs e)
         {
-            try
+            if (this.treeView.InvokeRequired)
             {
-                // Clear the treeview.
                 this.treeView.Invoke(new ClearNodesDelegate(ClearNodes));
+            }
+            else
+            {
+                ClearNodes();
+            }
 
-                // Get the text.
-                this._text = GetDocumentText(PluginBase.GetCurrentScintilla());
+            NppXmlNode node;
 
-                // Do validations.
-                if (!this._text.IsValidXml(out this._xmlDocument) || null == this._xmlDocument.DocumentElement)
-                {
-                    return;
-                }
+            // Do validations.
+            if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out node))
+            {
+                return;
+            }
 
-                // Add the base treenode.
-                this.treeView.Invoke(new AddNodeToTreeViewDelegate(AddNodeToTreeView),
-                    new TreeNode(this._xmlDocument.DocumentElement.Name)
-                    {
-                        ToolTipText = DoToolTip(this._xmlDocument.DocumentElement),
-                        Tag = GetTextBoundary(this._xmlDocument.DocumentElement)
-                    });
+            if (this.treeView.InvokeRequired)
+            {
+                this.treeView.Invoke(new AddNodeToTreeViewDelegate(AddNodeToTreeView), GenerateTreeNode(node));
+            }
+            else
+            {
+                this.treeView.Nodes.Add(GenerateTreeNode(node));
+            }
 
-                // Add the rest of the nodes.
-                var treeNode = this.treeView.Nodes[0];
-                AddNode(this._xmlDocument.DocumentElement, treeNode);
+            // Add the rest of the nodes.
+            var treeNode = this.treeView.Nodes[0];
+            AddNode(node, treeNode);
 
-                // Finish up the operation.
+            // Finish up the operation.
+            if (this.treeView.InvokeRequired)
+            {
                 this.treeView.Invoke(new ExpandTreeViewDelegate(ExpandTreeView));
             }
-            catch
+            else
             {
-                // TODO: log it somewhere
-                throw;
+                ExpandTreeView();
             }
-            finally
-            {
-                this._text = null;
-                this._xmlDocument = null;
-            }
+
+            this._workerIsRunning = false;
         }
 
         /// <summary>
-        /// Method to get the text boundary for the tree node.
+        ///     Background worker method to do the user interface updated.
         /// </summary>
-        /// <param name="xmlNode">The xml element to do the text search</param>
-        /// <returns>The text boundary.</returns>
-        private TextBoundary GetTextBoundary(XmlNode xmlNode)
+        /// <param name="sender">The background worker object.</param>
+        /// <param name="e">The event arguments.</param>
+        private void BackgroundWorker_ToggleTreeViewDoWork(object sender, DoWorkEventArgs e)
         {
-            // Set the boundaries.
-            var textBoundary = new TextBoundary
+            if (this._expanded)
             {
-                StartIndex = this._lastPosition + this._text.IndexOf('<'),
-                EndIndex = this._lastPosition + this._text.IndexOf('>') + 1
-            };
-
-            // Sub string the text and assign the last position.
-            this._text = this._text.Substring(textBoundary.EndIndex - this._lastPosition);
-            this._lastPosition = textBoundary.EndIndex;
-
-            // Return the information.
-            return textBoundary;
-        }
-
-        /// <summary>
-        /// Method to add a xml node to a tree node.
-        /// </summary>
-        /// <param name="inXmlNode">The xml node.</param>
-        /// <param name="inTreeNode">The tree node.</param>
-        private void AddNode(XmlNode inXmlNode, TreeNode inTreeNode)
-        {
-            if (!inXmlNode.HasChildNodes) { return; }
-            for (var i = 0; i < inXmlNode.ChildNodes.Count; i++)
-            {
-                var xNode = inXmlNode.ChildNodes[i] as XmlElement;
-
-                // If isn't a xml element, we do not add it.
-                if (null == xNode) { continue; }
-                this.treeView.Invoke(new AddNodeToNodeDelegate(AddNodeToNode),
-                    new TreeNode(xNode.Name)
-                    {
-                        ToolTipText = DoToolTip(xNode),
-                        Tag = GetTextBoundary(xNode)
-                    }, inTreeNode);
-                AddNode(xNode, inTreeNode.Nodes[i]);
+                if (this.treeView.InvokeRequired)
+                {
+                    this.treeView.Invoke(new CollapseTreeViewDelegate(CollapseTreeView));
+                }
+                else
+                {
+                    CollapseTreeView();
+                }
             }
+            else
+            {
+                if (this.treeView.InvokeRequired)
+                {
+                    this.treeView.Invoke(new ExpandTreeViewDelegate(ExpandTreeView));
+                }
+                else
+                {
+                    ExpandTreeView();
+                }
+            }
+
+            this._workerIsRunning = false;
         }
 
         /// <summary>
-        /// Method to clear the nodes of the tree view.
+        ///     Clear the treeview nodes.
         /// </summary>
         private void ClearNodes()
         {
@@ -147,7 +142,34 @@ namespace NppXmlTreeviewPlugin.Forms
         }
 
         /// <summary>
-        /// Method to add a node to the tree view.
+        ///     Method to add a npp xml node to a tree node.
+        /// </summary>
+        /// <param name="inXmlNode">The npp xml node.</param>
+        /// <param name="inTreeNode">The tree node.</param>
+        private void AddNode(NppXmlNode inXmlNode, TreeNode inTreeNode)
+        {
+            if (!inXmlNode.HasChildNodes)
+            {
+                return;
+            }
+            for (var i = 0; i < inXmlNode.ChildNodes.Count; i++)
+            {
+                var xNode = inXmlNode.ChildNodes[i];
+
+                if (this.treeView.InvokeRequired)
+                {
+                    this.treeView.Invoke(new AddNodeToNodeDelegate(AddNodeToNode), GenerateTreeNode(xNode), inTreeNode);
+                }
+                else
+                {
+                    AddNodeToNode(GenerateTreeNode(xNode), inTreeNode);
+                }
+                AddNode(xNode, inTreeNode.Nodes[i]);
+            }
+        }
+
+        /// <summary>
+        ///     Method to add a node to the tree view.
         /// </summary>
         /// <param name="treeNode">The node to add.</param>
         private void AddNodeToTreeView(TreeNode treeNode)
@@ -156,48 +178,92 @@ namespace NppXmlTreeviewPlugin.Forms
         }
 
         /// <summary>
-        /// Method to add a tree node to a parent tree node.
-        /// </summary>
-        /// <param name="treeNode">The tree node to add.</param>
-        /// <param name="parent">The parent tree node.</param>
-        private void AddNodeToNode(TreeNode treeNode, TreeNode parent)
-        {
-            parent.Nodes.Add(treeNode);
-        }
-
-        /// <summary>
-        /// Method to expand the tree view.
+        ///     Method to expand the tree view.
         /// </summary>
         private void ExpandTreeView()
         {
             this.treeView.ShowNodeToolTips = true;
             this.treeView.ExpandAll();
             this.treeView.Nodes[0].EnsureVisible();
+            this._expanded = true;
+
+            this.ButtonToggle.Image = Resources.toggle;
+            this.TooltipButtonToogle.SetToolTip(this.ButtonToggle, "Collapse treeview");
         }
 
         /// <summary>
-        /// Method to handle the tree node click.
+        ///     Method to collapse the tree view.
+        /// </summary>
+        private void CollapseTreeView()
+        {
+            this.treeView.ShowNodeToolTips = true;
+            this.treeView.CollapseAll();
+            this.treeView.Nodes[0].EnsureVisible();
+            this._expanded = false;
+
+            this.ButtonToggle.Image = Resources.toggle_expand;
+            this.TooltipButtonToogle.SetToolTip(this.ButtonToggle, "Expand treeview");
+        }
+
+        /// <summary>
+        ///     Method to handle the tree node click.
         /// </summary>
         /// <param name="sender">The treeview.</param>
-        /// <param name="e">The event arguments</param>
-        private void treeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        /// <param name="e">The event arguments.</param>
+        private void TreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             var textBoundary = (TextBoundary)e.Node.Tag;
 
             // Highlight the text.
             var currentScintilla = PluginBase.GetCurrentScintilla();
-            Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONSTART, textBoundary.StartIndex, 0);
-            Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONEND, textBoundary.EndIndex, 0);
+
+            var startLineStartPos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_POSITIONFROMLINE,
+                textBoundary.StartNodePosition.LineNumber, 0);
+            var endLineStartPos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_POSITIONFROMLINE,
+                textBoundary.EndNodePosition.LineNumber, 0);
+
+            Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONSTART,
+                startLineStartPos + textBoundary.StartNodePosition.LinePosition, 0);
+            Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSELECTIONEND,
+                endLineStartPos + textBoundary.EndNodePosition.LinePosition, 0);
             Win32.SendMessage(currentScintilla, SciMsg.SCI_SCROLLCARET, 0, 0);
+        }
+
+        /// <summary>
+        ///     Method to handle the toggle button click.
+        /// </summary>
+        /// <param name="sender">The button.</param>
+        /// <param name="e">The event arguments.</param>
+        private void ButtonToggle_Click(object sender, EventArgs e)
+        {
+            if (this._workerIsRunning)
+            {
+                return;
+            }
+
+            // Start the background worker.
+            var backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += BackgroundWorker_ToggleTreeViewDoWork;
+            backgroundWorker.RunWorkerAsync();
+            this._workerIsRunning = true;
         }
 
         #endregion
 
-
         #region PRIVATE STATIC METHODS
 
         /// <summary>
-        /// Method to get the text from the Scintilla component.
+        ///     Method to add a tree node to a parent tree node.
+        /// </summary>
+        /// <param name="treeNode">The tree node to add.</param>
+        /// <param name="parent">The parent tree node.</param>
+        private static void AddNodeToNode(TreeNode treeNode, TreeNode parent)
+        {
+            parent.Nodes.Add(treeNode);
+        }
+
+        /// <summary>
+        ///     Method to get the text from the Scintilla component.
         /// </summary>
         /// <param name="currentScintilla">The current Scintilla.</param>
         /// <returns>The document text.</returns>
@@ -214,42 +280,37 @@ namespace NppXmlTreeviewPlugin.Forms
                     Win32.SendMessage(currentScintilla, SciMsg.SCI_GETTEXT, length, ptr);
                 }
 
-                return System.Text.Encoding.UTF8.GetString(sb).TrimEnd('\0');
+                return Encoding.UTF8.GetString(sb).TrimEnd('\0');
             }
         }
 
         /// <summary>
-        /// Method to do the tooltip of a xml node.
+        /// Method to genrate a treenode from a npp tree node.
         /// </summary>
-        /// <param name="xNode">The xml node.</param>
-        /// <returns>The xml node tooltip.</returns>
-        private static string DoToolTip(XmlNode xNode)
+        /// <param name="node">The npp tree node.</param>
+        /// <returns>The tree node.</returns>
+        private static TreeNode GenerateTreeNode(NppXmlNode node)
         {
-            var sb = new StringBuilder("<");
-            sb.Append(xNode.Name);
-            if (null != xNode.Attributes)
+            return new TreeNode(node.Name)
             {
-                foreach (XmlAttribute attribute in xNode.Attributes)
-                {
-                    sb.AppendFormat(" {0}=\"{1}\"", attribute.Name, attribute.Value);
-                }
-            }
-            sb.Append("/>");
-            return sb.ToString();
+                ToolTipText = $"{node.Name}",
+                Tag = new TextBoundary(node.StartPosition, node.EndPosition)
+            };
         }
 
         #endregion
 
+        #region PRIVATE DELEGATES
 
-        #region PRIVATE FIELDS
-
-        private XmlDocument _xmlDocument;
-        private string _text;
-        private int _lastPosition;
         private delegate void ClearNodesDelegate();
+
         private delegate void AddNodeToTreeViewDelegate(TreeNode treeNode);
+
         private delegate void AddNodeToNodeDelegate(TreeNode treeNode, TreeNode parent);
+
         private delegate void ExpandTreeViewDelegate();
+
+        private delegate void CollapseTreeViewDelegate();
 
         #endregion
     }

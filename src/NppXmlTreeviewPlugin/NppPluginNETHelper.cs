@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Text;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Forms;
 
 namespace NppPluginNET
 {

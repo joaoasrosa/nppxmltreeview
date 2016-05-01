@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using NppPluginNET;
 using NppPlugin.DllExport;
+using NppPluginNET;
 
 namespace NppXmlTreeviewPlugin
 {
@@ -59,6 +58,7 @@ namespace NppXmlTreeviewPlugin
                     break;
                 case (uint)NppMsg.NPPN_FILESAVED:
                 case (uint)NppMsg.NPPN_FILEOPENED:
+                case (uint)SciMsg.SCN_MODIFIED:
                 case 4294967294:
                     if (null == Main.frmMyDlg)
                     {
