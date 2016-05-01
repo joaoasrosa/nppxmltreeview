@@ -1,4 +1,4 @@
-version: 1.3.0.{build}
+version: 1.2.0.{build}
 skip_tags: true
 os: Visual Studio 2015
 configuration: Release
@@ -20,8 +20,8 @@ artifacts:
   name: nppxmltreeview
 deploy:
 - provider: GitHub
-  tag: Amsterdam v$(appveyor_build_version)
-  release: NppTreeViewPlugin Amsterdam v$(appveyor_build_version)
+  tag: Dublin v$(appveyor_build_version)
+  release: NppTreeViewPlugin Dublin v$(appveyor_build_version)
   auth_token:
     secure: yYYP2c1jtrjIbccXBUjTmCqdGWnI5AxPgNUfNhjZZrpA81Y+DKsGh3wamK/pOSMt
   artifact: 
