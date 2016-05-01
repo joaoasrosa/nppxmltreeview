@@ -21,8 +21,7 @@ namespace NppXmlTreeviewPlugin
         static bool someSetting = false;
         public static FormTreeView frmMyDlg = null;
         static int idMyDlg = -1;
-        static Bitmap tbBmp = Resources.star;
-        static Bitmap tbBmp_tbTab = Resources.star_bmp;
+        static Bitmap tbBmp = Resources.blue_document_tree;
         static Icon tbIcon = null;
         #endregion
 
@@ -114,7 +113,7 @@ namespace NppXmlTreeviewPlugin
                     };
                     ImageAttributes attr = new ImageAttributes();
                     attr.SetRemapTable(colorMap);
-                    g.DrawImage(tbBmp_tbTab, new Rectangle(0, 0, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel, attr);
+                    g.DrawImage(tbBmp, new Rectangle(0, 0, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel, attr);
                     tbIcon = Icon.FromHandle(newBmp.GetHicon());
                 }
 

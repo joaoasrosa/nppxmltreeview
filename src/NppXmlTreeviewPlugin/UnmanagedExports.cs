@@ -58,6 +58,7 @@ namespace NppXmlTreeviewPlugin
                     break;
                 case (uint)NppMsg.NPPN_FILESAVED:
                 case (uint)NppMsg.NPPN_FILEOPENED:
+                case (uint)SciMsg.SCN_MODIFIED:
                 case 4294967294:
                     if (null == Main.frmMyDlg)
                     {
