@@ -1109,6 +1109,7 @@ namespace NppPluginNET
         public int y;                    /* SCN_DWELLSTART, SCN_DWELLEND */
         public int token;                /* SCN_MODIFIED with SC_MOD_CONTAINER */
         public int annotationLinesAdded;/* SC_MOD_CHANGEANNOTATION */
+        public int updated;             /* SCN_UPDATEUI */
     }
 
     [Flags]

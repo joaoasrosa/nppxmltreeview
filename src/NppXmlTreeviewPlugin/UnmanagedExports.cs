@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using NppPlugin.DllExport;
 using NppPluginNET;
 
@@ -58,13 +60,16 @@ namespace NppXmlTreeviewPlugin
                     break;
                 case (uint)NppMsg.NPPN_FILESAVED:
                 case (uint)NppMsg.NPPN_FILEOPENED:
-                case (uint)SciMsg.SCN_MODIFIED:
                 case 4294967294:
                     if (null == Main.frmMyDlg)
                     {
                         return;
                     }
                     Main.frmMyDlg.UpdateUserInterface();
+                    break;
+                case (uint)SciMsg.SCN_MODIFIED:
+                    if (nc.modificationType == 1 || nc.modificationType == 2)
+                        MessageBox.Show(nc.modificationType.ToString());
                     break;
             }
         }
