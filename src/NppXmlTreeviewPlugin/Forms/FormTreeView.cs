@@ -71,6 +71,7 @@ namespace NppXmlTreeviewPlugin.Forms
             // Do validations.
             if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out node))
             {
+                this._workerIsRunning = false;
                 return;
             }
 
