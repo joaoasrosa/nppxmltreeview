@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Web.UI.Design.WebControls;
 using System.Windows.Forms;
 using NppPlugin.DllExport;
 using NppPluginNET;
@@ -68,8 +70,12 @@ namespace NppXmlTreeviewPlugin
                     Main.frmMyDlg.UpdateUserInterface();
                     break;
                 case (uint)SciMsg.SCN_MODIFIED:
-                    if (nc.modificationType == 1 || nc.modificationType == 2)
-                        MessageBox.Show(nc.modificationType.ToString());
+                    if (null == Main.frmMyDlg || (nc.modificationType != 1048576 && nc.modificationType != 2064))
+                    {
+                        return;
+                    }
+
+                    Main.frmMyDlg.UpdateUserInterface();
                     break;
             }
         }
