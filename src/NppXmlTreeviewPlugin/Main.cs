@@ -90,10 +90,8 @@ namespace NppXmlTreeviewPlugin
 
         internal static void myMenuFunction()
         {
-            MessageBox.Show("NppTreeView, License under Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0)\r\n" +
-                            "Created by João Rosa\r\n\r\n" +
-                            "Source code hosted in https://github.com/joaoasrosa/nppxmltreeview \r\n" +
-                            "Please feel free to contribute.");
+            var about = new FormAbout();
+            about.ShowDialog();
         }
 
         internal static void myDockableDialog()

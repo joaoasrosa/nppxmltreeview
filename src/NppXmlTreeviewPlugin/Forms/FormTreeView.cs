@@ -57,13 +57,31 @@ namespace NppXmlTreeviewPlugin.Forms
         /// <param name="e">The event arguments.</param>
         private void BackgroundWorker_UpdateUserInterfaceDoWork(object sender, DoWorkEventArgs e)
         {
-            if (this.treeView.InvokeRequired)
+            if (!this.ButtonToggle.InvokeRequired)
             {
-                this.treeView.Invoke(new ClearNodesDelegate(ClearNodes));
+                this.ButtonToggle.Invoke(new EnableToggleButtonDelegate(EnableToggleButton), false);
             }
             else
             {
-                ClearNodes();
+                EnableToggleButton(false);
+            }
+
+            if (this.treeView.InvokeRequired)
+            {
+                this.treeView.Invoke(new SetTreeviewVisibilityDelegate(SetTreeviewVisibility), false);
+            }
+            else
+            {
+                SetTreeviewVisibility(false);
+            }
+
+            if (this.LabelStatus.InvokeRequired)
+            {
+                this.LabelStatus.Invoke(new SetStatusLabelTextDelegate(SetStatusLabelText), "Parsing the document");
+            }
+            else
+            {
+                SetStatusLabelText("Parsing the document");
             }
 
             NppXmlNode node;
@@ -71,8 +89,26 @@ namespace NppXmlTreeviewPlugin.Forms
             // Do validations.
             if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out node))
             {
+                if (this.LabelStatus.InvokeRequired)
+                {
+                    this.LabelStatus.Invoke(new SetStatusLabelTextDelegate(SetStatusLabelText), "Document is not valid.");
+                }
+                else
+                {
+                    SetStatusLabelText("Document is not valid.");
+                }
+
                 this._workerIsRunning = false;
                 return;
+            }
+
+            if (this.treeView.InvokeRequired)
+            {
+                this.treeView.Invoke(new ClearNodesDelegate(ClearNodes));
+            }
+            else
+            {
+                ClearNodes();
             }
 
             if (this.treeView.InvokeRequired)
@@ -96,6 +132,24 @@ namespace NppXmlTreeviewPlugin.Forms
             else
             {
                 ExpandTreeView();
+            }
+
+            if (this.LabelStatus.InvokeRequired)
+            {
+                this.LabelStatus.Invoke(new SetStatusLabelTextDelegate(SetStatusLabelText), string.Empty);
+            }
+            else
+            {
+                SetStatusLabelText(string.Empty);
+            }
+
+            if (!this.ButtonToggle.InvokeRequired)
+            {
+                this.ButtonToggle.Invoke(new EnableToggleButtonDelegate(EnableToggleButton), true);
+            }
+            else
+            {
+                EnableToggleButton(true);
             }
 
             this._workerIsRunning = false;
@@ -186,6 +240,8 @@ namespace NppXmlTreeviewPlugin.Forms
             this.treeView.ShowNodeToolTips = true;
             this.treeView.ExpandAll();
             this.treeView.Nodes[0].EnsureVisible();
+            this.treeView.Visible = true;
+
             this._expanded = true;
 
             this.ButtonToggle.Image = Resources.toggle;
@@ -205,6 +261,34 @@ namespace NppXmlTreeviewPlugin.Forms
             this.ButtonToggle.Image = Resources.toggle_expand;
             this.TooltipButtonToogle.SetToolTip(this.ButtonToggle, "Expand treeview");
         }
+
+        /// <summary>
+        /// Method to set the label status text.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        private void SetStatusLabelText(string text)
+        {
+            this.LabelStatus.Text = text;
+        }
+
+        /// <summary>
+        /// Method to set the label visibility.
+        /// </summary>
+        /// <param name="visible">The visibility.</param>
+        private void SetTreeviewVisibility(bool visible)
+        {
+            this.treeView.Visible = visible;
+        }
+
+        /// <summary>
+        /// Method to enable the toggle button.
+        /// </summary>
+        /// <param name="enable">Flag with the enable value.</param>
+        private void EnableToggleButton(bool enable)
+        {
+            this.ButtonToggle.Enabled = enable;
+        }
+
 
         /// <summary>
         ///     Method to handle the tree node click.
@@ -312,6 +396,12 @@ namespace NppXmlTreeviewPlugin.Forms
         private delegate void ExpandTreeViewDelegate();
 
         private delegate void CollapseTreeViewDelegate();
+
+        private delegate void SetTreeviewVisibilityDelegate(bool visible);
+
+        private delegate void SetStatusLabelTextDelegate(string text);
+
+        private delegate void EnableToggleButtonDelegate(bool enable);
 
         #endregion
     }
