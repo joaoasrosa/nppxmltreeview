@@ -1,4 +1,4 @@
-# Notepadd++ XML Treeview Pluhin
+# Notepadd++ XML Treeview Plugin
 
 [![Build status](https://ci.appveyor.com/api/projects/status/mvhq920dyybn775a?svg=true)](https://ci.appveyor.com/project/joaoasrosa/nppxmltreeview)
 
