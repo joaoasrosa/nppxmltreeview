@@ -61,7 +61,7 @@ namespace NppXmlTreeviewPlugin.Parsers
                             }
 
                             nppXmlNode = new NppXmlNode(xmlTextReader.Name, new NppXmlNodePosition(xmlTextReader));
-                            
+
                             ReadChildOrSibling(xmlTextReader, xmlTextReader.Depth, nppXmlNode);
                         }
                         if (null == nppXmlNode)
@@ -75,7 +75,7 @@ namespace NppXmlTreeviewPlugin.Parsers
                     }
                 }
             }
-            catch 
+            catch
             {
                 nppXmlNode = null;
                 return false;
@@ -99,7 +99,7 @@ namespace NppXmlTreeviewPlugin.Parsers
                     {
                         return;
                     }
-                    
+
                     var sibling = new NppXmlNode(xmlTextReader.Name, new NppXmlNodePosition(xmlTextReader), node.Parent);
                     node.Parent.ChildNodes.Add(sibling);
 

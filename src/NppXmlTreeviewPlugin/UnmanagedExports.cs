@@ -70,9 +70,19 @@ namespace NppXmlTreeviewPlugin
                     Main.frmMyDlg.UpdateUserInterface();
                     break;
                 case (uint)SciMsg.SCN_MODIFIED:
-                    if (null == Main.frmMyDlg || (nc.modificationType != 1048576 && nc.modificationType != 2064))
+                    if (null == Main.frmMyDlg || (nc.modificationType != 1048576 && nc.modificationType != 2064 && nc.modificationType != 16400))
                     {
                         return;
+                    }
+
+                    // Should be the selection event. Why?!
+                    if (nc.modificationType == 16400)
+                    {
+
+                        //File.AppendAllText(@"c:\temp\stupid.text", nc.line + @" " + nc.position);
+
+                        // Update selection.
+                        Main.frmMyDlg.SetNodeSelection();
                     }
 
                     Main.frmMyDlg.UpdateUserInterface();

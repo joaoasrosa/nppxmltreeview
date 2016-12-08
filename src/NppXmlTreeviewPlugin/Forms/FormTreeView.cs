@@ -46,6 +46,15 @@ namespace NppXmlTreeviewPlugin.Forms
             this._workerIsRunning = true;
         }
 
+
+        public void SetNodeSelection()
+        {
+            if (this._workerIsRunning)
+            {
+                return;
+            }
+        }
+
         #endregion
 
         #region PRIVATE METHODS
@@ -288,7 +297,6 @@ namespace NppXmlTreeviewPlugin.Forms
         {
             this.ButtonToggle.Enabled = enable;
         }
-
 
         /// <summary>
         ///     Method to handle the tree node click.
