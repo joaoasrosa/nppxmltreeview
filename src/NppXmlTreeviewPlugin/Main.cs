@@ -46,13 +46,11 @@ namespace NppXmlTreeviewPlugin
             {
                 return Assembly.LoadFrom(assemblyPath);
             }
-            else
-            {
-                // HACK: allow loading of session files created with older assembly versions
-                Assembly asm = typeof(Main).Assembly;
-                if (args.Name.Contains("NppXmlTreeviewPlugin, Version=") && (args.Name != asm.FullName))
-                    return typeof(Main).Assembly;
-            }
+
+            // HACK: allow loading of session files created with older assembly versions
+            Assembly asm = typeof(Main).Assembly;
+            if (args.Name.Contains("NppXmlTreeviewPlugin, Version=") && (args.Name != asm.FullName))
+                return typeof(Main).Assembly;
             return null;
         }
 
@@ -65,9 +63,11 @@ namespace NppXmlTreeviewPlugin
             iniFilePath = Path.Combine(iniFilePath, PluginName + ".ini");
             someSetting = (Win32.GetPrivateProfileInt("SomeSection", "SomeKey", 0, iniFilePath) != 0);
 
-            PluginBase.SetCommand(0, "Npp XML TreeView", myDockableDialog); idMyDlg = 1;
+            PluginBase.SetCommand(0, "Npp XML TreeView", myDockableDialog);
             PluginBase.SetCommand(1, "About NppXMLTreeView", myMenuFunction, new ShortcutKey(false, false, false, Keys.None));
 
+            // The command for the plugin.
+            idMyDlg = 0;
         }
 
         internal static void SetToolBarIcon()
