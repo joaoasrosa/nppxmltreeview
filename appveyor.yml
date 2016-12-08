@@ -20,8 +20,8 @@ artifacts:
   name: nppxmltreeview
 deploy:
 - provider: GitHub
-  tag: Amsterdam v$(appveyor_build_version)
-  release: NppTreeViewPlugin Amsterdam v$(appveyor_build_version)
+  tag: Paris v$(appveyor_build_version)
+  release: NppTreeViewPlugin Paris v$(appveyor_build_version)
   auth_token:
     secure: yYYP2c1jtrjIbccXBUjTmCqdGWnI5AxPgNUfNhjZZrpA81Y+DKsGh3wamK/pOSMt
   artifact: 
