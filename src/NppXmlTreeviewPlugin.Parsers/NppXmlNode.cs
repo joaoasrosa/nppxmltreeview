@@ -11,6 +11,8 @@ namespace NppXmlTreeviewPlugin.Parsers
     /// </summary>
     public class NppXmlNode
     {
+        private static int nodeId = 1;
+
         /// <summary>
         /// The default constructor for the class.
         /// </summary>
@@ -21,6 +23,8 @@ namespace NppXmlTreeviewPlugin.Parsers
             this.Name = name;
             this.StartPosition = startPosition;
             this.ChildNodes = new List<NppXmlNode>();
+            this.Id = nodeId;
+            nodeId++;
         }
 
         /// <summary>
@@ -35,6 +39,37 @@ namespace NppXmlTreeviewPlugin.Parsers
             this.StartPosition = startPosition;
             this.ChildNodes = new List<NppXmlNode>();
             this.Parent = parent;
+            this.Id = nodeId;
+            nodeId++;
+        }
+
+        /// <summary>
+        /// Returns the first NppXmlNode for the line number.
+        /// </summary>
+        /// <param name="lineNumber">The line number.</param>
+        /// <returns>The first NppXmlNode in the line.</returns>
+        public NppXmlNode FindNppXmlNodeByLine(int lineNumber)
+        {
+            if (this.StartPosition.LineNumber.Equals(lineNumber))
+            {
+                return this;
+            }
+
+            if (!this.HasChildNodes)
+            {
+                return null;
+            }
+
+            foreach (var nppXmlNode in this.ChildNodes)
+            {
+                var node = nppXmlNode.FindNppXmlNodeByLine(lineNumber);
+                if (null != node)
+                {
+                    return node;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -46,6 +81,7 @@ namespace NppXmlTreeviewPlugin.Parsers
         public static bool TryParse(string xml, out NppXmlNode nppXmlNode)
         {
             nppXmlNode = null;
+            nodeId = 1;
 
             try
             {
@@ -145,6 +181,11 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// The name of the node.
         /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Internal id for the node.
+        /// </summary>
+        public int Id { get; private set; }
 
         /// <summary>
         /// The childrens of the node.

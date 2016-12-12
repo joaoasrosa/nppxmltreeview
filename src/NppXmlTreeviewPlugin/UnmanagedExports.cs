@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web.UI.Design.WebControls;
 using System.Windows.Forms;
@@ -70,19 +71,19 @@ namespace NppXmlTreeviewPlugin
                     Main.frmMyDlg.UpdateUserInterface();
                     break;
                 case (uint)SciMsg.SCN_MODIFIED:
-                    if (null == Main.frmMyDlg || (nc.modificationType != 1048576 && nc.modificationType != 2064 && nc.modificationType != 16400))
+                    if (null == Main.frmMyDlg || !new[] { 1048576, 2064, 16400 }.Contains(nc.modificationType))
                     {
                         return;
                     }
-
-                    // Should be the selection event. Why?!
+                    
+                    // Mouse selection.
+                    // TODO: and if I use keyboard?
                     if (nc.modificationType == 16400)
                     {
-
-                        //File.AppendAllText(@"c:\temp\stupid.text", nc.line + @" " + nc.position);
-
                         // Update selection.
                         Main.frmMyDlg.SetNodeSelection();
+
+                        return;
                     }
 
                     Main.frmMyDlg.UpdateUserInterface();

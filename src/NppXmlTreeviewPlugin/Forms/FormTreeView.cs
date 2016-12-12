@@ -12,6 +12,7 @@ namespace NppXmlTreeviewPlugin.Forms
     {
         private bool _expanded;
         private bool _workerIsRunning;
+        private NppXmlNode _rootNode;
 
         #region CONSTRUCTORS
 
@@ -53,6 +54,12 @@ namespace NppXmlTreeviewPlugin.Forms
             {
                 return;
             }
+
+            // Start the background worker.
+            var backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += BackgroundWorker_SetNodeSelectionDoWork;
+            backgroundWorker.RunWorkerAsync();
+            this._workerIsRunning = true;
         }
 
         #endregion
@@ -66,6 +73,8 @@ namespace NppXmlTreeviewPlugin.Forms
         /// <param name="e">The event arguments.</param>
         private void BackgroundWorker_UpdateUserInterfaceDoWork(object sender, DoWorkEventArgs e)
         {
+            this._rootNode = null;
+
             if (!this.ButtonToggle.InvokeRequired)
             {
                 this.ButtonToggle.Invoke(new EnableToggleButtonDelegate(EnableToggleButton), false);
@@ -93,10 +102,8 @@ namespace NppXmlTreeviewPlugin.Forms
                 SetStatusLabelText("Parsing the document");
             }
 
-            NppXmlNode node;
-
             // Do validations.
-            if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out node))
+            if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out this._rootNode))
             {
                 if (this.LabelStatus.InvokeRequired)
                 {
@@ -122,16 +129,16 @@ namespace NppXmlTreeviewPlugin.Forms
 
             if (this.treeView.InvokeRequired)
             {
-                this.treeView.Invoke(new AddNodeToTreeViewDelegate(AddNodeToTreeView), GenerateTreeNode(node));
+                this.treeView.Invoke(new AddNodeToTreeViewDelegate(AddNodeToTreeView), GenerateTreeNode(this._rootNode));
             }
             else
             {
-                this.treeView.Nodes.Add(GenerateTreeNode(node));
+                this.treeView.Nodes.Add(GenerateTreeNode(this._rootNode));
             }
 
             // Add the rest of the nodes.
             var treeNode = this.treeView.Nodes[0];
-            AddNode(node, treeNode);
+            AddNode(this._rootNode, treeNode);
 
             // Finish up the operation.
             if (this.treeView.InvokeRequired)
@@ -192,6 +199,37 @@ namespace NppXmlTreeviewPlugin.Forms
                 {
                     ExpandTreeView();
                 }
+            }
+
+            this._workerIsRunning = false;
+        }
+
+        /// <summary>
+        ///     Background worker method to do the user selects text.
+        /// </summary>
+        /// <param name="sender">The background worker object.</param>
+        /// <param name="e">The event arguments.</param>
+        private void BackgroundWorker_SetNodeSelectionDoWork(object sender, DoWorkEventArgs e)
+        {
+            // Highlight the text.
+            var currentScintilla = PluginBase.GetCurrentScintilla();
+
+            var selectionStartPos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETSELECTIONSTART, 0, 0);
+            var selectionEndPos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETSELECTIONEND, 0, 0);
+            var selectionStartLine =
+                (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_LINEFROMPOSITION, selectionStartPos, 0);
+            var selectionEndLine =
+                (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_LINEFROMPOSITION, selectionEndPos, 0);
+
+            var node = this._rootNode.FindNppXmlNodeByLine(selectionStartLine);
+
+            if (this.treeView.InvokeRequired)
+            {
+                this.treeView.Invoke(new SetTreeviewSelectionDelegate(SetTreeviewSelection), node.Id.ToString());
+            }
+            else
+            {
+                SetTreeviewSelection(node.Id.ToString());
             }
 
             this._workerIsRunning = false;
@@ -299,6 +337,16 @@ namespace NppXmlTreeviewPlugin.Forms
         }
 
         /// <summary>
+        /// Selects the treenode in the treeview.
+        /// </summary>
+        /// <param name="id">The node id</param>
+        private void SetTreeviewSelection(string id)
+        {
+            this.treeView.SelectedNode = this.treeView.Nodes.Find(id, true)[0];
+            this.treeView.Focus();
+        }
+
+        /// <summary>
         ///     Method to handle the tree node click.
         /// </summary>
         /// <param name="sender">The treeview.</param>
@@ -378,16 +426,19 @@ namespace NppXmlTreeviewPlugin.Forms
         }
 
         /// <summary>
-        /// Method to genrate a treenode from a npp tree node.
+        /// Method to generate a treenode from a npp tree node.
         /// </summary>
         /// <param name="node">The npp tree node.</param>
         /// <returns>The tree node.</returns>
         private static TreeNode GenerateTreeNode(NppXmlNode node)
         {
-            return new TreeNode(node.Name)
+            return new TreeNode
             {
                 ToolTipText = $"{node.Name}",
-                Tag = new TextBoundary(node.StartPosition, node.EndPosition)
+                Tag = new TextBoundary(node.StartPosition, node.EndPosition, node.Id),
+                Text = node.Name,
+                // The name is the key.
+                Name = node.Id.ToString()
             };
         }
 
@@ -410,6 +461,8 @@ namespace NppXmlTreeviewPlugin.Forms
         private delegate void SetStatusLabelTextDelegate(string text);
 
         private delegate void EnableToggleButtonDelegate(bool enable);
+
+        private delegate void SetTreeviewSelectionDelegate(string id);
 
         #endregion
     }

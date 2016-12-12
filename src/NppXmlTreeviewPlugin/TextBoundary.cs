@@ -12,10 +12,12 @@ namespace NppXmlTreeviewPlugin
         /// </summary>
         /// <param name="startNodePosition">The start node position.</param>
         /// <param name="endNodePosition">The end index.</param>
-        public TextBoundary(NppXmlNodePosition startNodePosition, NppXmlNodePosition endNodePosition)
+        /// <param name="id">The node id.</param>
+        public TextBoundary(NppXmlNodePosition startNodePosition, NppXmlNodePosition endNodePosition, int id)
         {
             this.StartNodePosition = startNodePosition;
             this.EndNodePosition = endNodePosition;
+            this.Id = id;
         }
 
         /// <summary>
@@ -27,5 +29,10 @@ namespace NppXmlTreeviewPlugin
         /// The end node position of the text.
         /// </summary>
         public NppXmlNodePosition EndNodePosition { get; private set; }
+
+        /// <summary>
+        /// The node id.
+        /// </summary>
+        public int Id { get; private set; }
     }
 }
