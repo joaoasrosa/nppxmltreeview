@@ -215,21 +215,23 @@ namespace NppXmlTreeviewPlugin.Forms
             var currentScintilla = PluginBase.GetCurrentScintilla();
 
             var selectionStartPos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETSELECTIONSTART, 0, 0);
-            var selectionEndPos = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETSELECTIONEND, 0, 0);
             var selectionStartLine =
                 (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_LINEFROMPOSITION, selectionStartPos, 0);
-            var selectionEndLine =
-                (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_LINEFROMPOSITION, selectionEndPos, 0);
+            var selectionStartPosInLine =
+                (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETCOLUMN, selectionStartPos, 0);
 
-            var node = this._rootNode.FindNppXmlNodeByLine(selectionStartLine);
+            var node = this._rootNode.FindNppXmlNodeByLine(selectionStartLine, selectionStartPosInLine);
 
-            if (this.treeView.InvokeRequired)
+            if (null != node)
             {
-                this.treeView.Invoke(new SetTreeviewSelectionDelegate(SetTreeviewSelection), node.Id.ToString());
-            }
-            else
-            {
-                SetTreeviewSelection(node.Id.ToString());
+                if (this.treeView.InvokeRequired)
+                {
+                    this.treeView.Invoke(new SetTreeviewSelectionDelegate(SetTreeviewSelection), node.Id.ToString());
+                }
+                else
+                {
+                    SetTreeviewSelection(node.Id.ToString());
+                }
             }
 
             this._workerIsRunning = false;

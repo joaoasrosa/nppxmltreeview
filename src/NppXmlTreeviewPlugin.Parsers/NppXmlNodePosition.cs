@@ -26,6 +26,6 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// <summary>
         /// The line position.
         /// </summary>
-        public int LinePosition { get; private set; }
+        public int LinePosition { get; }
     }
 }

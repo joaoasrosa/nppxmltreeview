@@ -47,10 +47,13 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// Returns the first NppXmlNode for the line number.
         /// </summary>
         /// <param name="lineNumber">The line number.</param>
+        /// <param name="positionInLine">The position in line.</param>
         /// <returns>The first NppXmlNode in the line.</returns>
-        public NppXmlNode FindNppXmlNodeByLine(int lineNumber)
+        public NppXmlNode FindNppXmlNodeByLine(int lineNumber, int positionInLine)
         {
-            if (this.StartPosition.LineNumber.Equals(lineNumber))
+            if (this.StartPosition.LineNumber.Equals(lineNumber)
+                && this.StartPosition.LinePosition <= positionInLine
+                && this.EndPosition.LinePosition >= positionInLine)
             {
                 return this;
             }
@@ -62,7 +65,7 @@ namespace NppXmlTreeviewPlugin.Parsers
 
             foreach (var nppXmlNode in this.ChildNodes)
             {
-                var node = nppXmlNode.FindNppXmlNodeByLine(lineNumber);
+                var node = nppXmlNode.FindNppXmlNodeByLine(lineNumber, positionInLine);
                 if (null != node)
                 {
                     return node;
@@ -170,7 +173,7 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// <summary>
         /// The start position of the node.
         /// </summary>
-        public NppXmlNodePosition StartPosition { get; private set; }
+        public NppXmlNodePosition StartPosition { get; }
 
         /// <summary>
         /// The end position of the node.
@@ -185,7 +188,7 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// <summary>
         /// Internal id for the node.
         /// </summary>
-        public int Id { get; private set; }
+        public int Id { get; }
 
         /// <summary>
         /// The childrens of the node.
