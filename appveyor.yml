@@ -1,6 +1,11 @@
 version: 1.5.0.{build}
 skip_tags: true
 os: Visual Studio 2015
+
+platform:
+    - x86
+    - x64
+
 configuration: Release
 assembly_info:
   patch: true
@@ -14,9 +19,15 @@ before_build:
 build:
   verbosity: minimal
 after_build:
-- ps: 7z a NppXMLTreeviewPlugin.zip c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\Release\NppXmlTreeviewPlugin.dll c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\Release\NppXmlTreeviewPlugin
+- ps: >-
+    if ($env:PLATFORM -eq "x64") {
+        7z a NppXMLTreeviewPlugin_$env:PLATFORM.zip c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\$env:PLATFORM\Release\NppXmlTreeviewPlugin.dll c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\$env:PLATFORM\Release\NppXmlTreeviewPlugin
+    }
+    if ($env:PLATFORM -eq "x86") {
+        7z a NppXMLTreeviewPlugin_$env:PLATFORM.zip c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\Release\NppXmlTreeviewPlugin.dll c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\Release\NppXmlTreeviewPlugin
+    }
 artifacts:
-- path: NppXmlTreeviewPlugin.zip
+- path: NppXmlTreeviewPlugin_*.zip
   name: nppxmltreeview
 deploy:
 - provider: GitHub
