@@ -7,6 +7,8 @@ Since the lack of an treeview to visualize XML, this plugin fill the gap. Base o
 
 All pull requests and contributions are welcome.
 
+You can find the installation instructions [here](https://github.com/joaoasrosa/nppxmltreeview/wiki).
+
 The project is license under [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0).
 
 Plugin based on [Notepad++ C# template](http://sourceforge.net/projects/sourcecookifier/files/other%20plugins/NppPlugin.NET.v0.5.zip/download).
