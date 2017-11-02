@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using NppPluginNET;
@@ -75,7 +76,7 @@ namespace NppXmlTreeviewPlugin.Forms
         {
             this._rootNode = null;
 
-            if (!this.ButtonToggle.InvokeRequired)
+            if (this.ButtonToggle.InvokeRequired)
             {
                 this.ButtonToggle.Invoke(new EnableToggleButtonDelegate(EnableToggleButton), false);
             }
@@ -102,8 +103,10 @@ namespace NppXmlTreeviewPlugin.Forms
                 SetStatusLabelText("Parsing the document");
             }
 
+            string attributeName = attributeNameTextBox.Enabled ? attributeNameTextBox.Text : null;
+
             // Do validations.
-            if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out this._rootNode))
+            if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out this._rootNode, attributeName))
             {
                 if (this.LabelStatus.InvokeRequired)
                 {
@@ -159,7 +162,7 @@ namespace NppXmlTreeviewPlugin.Forms
                 SetStatusLabelText(string.Empty);
             }
 
-            if (!this.ButtonToggle.InvokeRequired)
+            if (this.ButtonToggle.InvokeRequired)
             {
                 this.ButtonToggle.Invoke(new EnableToggleButtonDelegate(EnableToggleButton), true);
             }
@@ -412,6 +415,9 @@ namespace NppXmlTreeviewPlugin.Forms
         /// <returns>The document text.</returns>
         private static string GetDocumentText(IntPtr currentScintilla)
         {
+#if DEBUG
+            return File.ReadAllText("debug.xml");
+#endif
             var length = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
             var sb = new byte[length];
 
@@ -467,5 +473,26 @@ namespace NppXmlTreeviewPlugin.Forms
         private delegate void SetTreeviewSelectionDelegate(string id);
 
         #endregion
+
+        private void tagNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            attributeToolStripMenuItem.Checked = false;
+            tagNameToolStripMenuItem.Checked = true;
+            attributeNameTextBox.Enabled = false;
+            UpdateUserInterface();
+        }
+
+        private void attributeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            attributeToolStripMenuItem.Checked = true;
+            tagNameToolStripMenuItem.Checked = false;
+            attributeNameTextBox.Enabled = true;
+            UpdateUserInterface();
+        }
+
+        private void attributeNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateUserInterface();
+        }
     }
 }
