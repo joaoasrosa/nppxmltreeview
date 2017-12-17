@@ -1,4 +1,4 @@
-version: 1.5.0.{build}
+version: 1.6.0.{build}
 skip_tags: true
 os: Visual Studio 2015
 
@@ -31,8 +31,8 @@ artifacts:
   name: nppxmltreeview
 deploy:
 - provider: GitHub
-  tag: London v$(appveyor_build_version)
-  release: NppTreeViewPlugin London v$(appveyor_build_version)
+  tag: Berlin v$(appveyor_build_version)
+  release: NppTreeViewPlugin Berlin v$(appveyor_build_version)
   auth_token:
     secure: yYYP2c1jtrjIbccXBUjTmCqdGWnI5AxPgNUfNhjZZrpA81Y+DKsGh3wamK/pOSMt
   artifact: 
