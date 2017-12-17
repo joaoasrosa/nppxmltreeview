@@ -83,6 +83,18 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// <returns>True if parse successfully, false otherwise.</returns>
         public static bool TryParse(string xml, out NppXmlNode nppXmlNode)
         {
+            return TryParse(xml, out nppXmlNode, null);
+        }
+
+        /// <summary>
+        /// Method to try parse the XML.
+        /// </summary>
+        /// <param name="xml">The XMl as string.</param>
+        /// <param name="nppXmlNode">The Notepad++ XmlNode.</param>
+        /// <param name="nodeNameAttribute">The attribute, that will be used as node name. If no one of that attribute, tag name will be used</param>
+        /// <returns>True if parse successfully, false otherwise.</returns>
+        public static bool TryParse(string xml, out NppXmlNode nppXmlNode, string nodeNameAttribute)
+        {
             nppXmlNode = null;
             nodeId = 1;
 
@@ -101,7 +113,7 @@ namespace NppXmlTreeviewPlugin.Parsers
 
                             nppXmlNode = new NppXmlNode(xmlTextReader.Name, new NppXmlNodePosition(xmlTextReader));
 
-                            ReadChildOrSibling(xmlTextReader, xmlTextReader.Depth, nppXmlNode);
+                            ReadChildOrSibling(xmlTextReader, xmlTextReader.Depth, nppXmlNode, nodeNameAttribute);
                         }
                         if (null == nppXmlNode)
                         {
@@ -127,8 +139,18 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// <param name="xmlTextReader">The XML text reader.</param>
         /// <param name="currentDepth">The current depth on the XML tree.</param>
         /// <param name="node">The XML node</param>
-        private static void ReadChildOrSibling(XmlTextReader xmlTextReader, int currentDepth, NppXmlNode node)
+        private static void ReadChildOrSibling(XmlTextReader xmlTextReader, int currentDepth, NppXmlNode node, string nodeNameAttribute)
         {
+            var nodeName = xmlTextReader.Name;
+            if (!string.IsNullOrEmpty(nodeNameAttribute))
+            {
+                var attr = xmlTextReader.GetAttribute(nodeNameAttribute);
+                if (attr != null)
+                    nodeName = attr;
+            }
+
+            node.Name = nodeName;
+
             while (xmlTextReader.Read())
             {
                 // It's a sibling.
@@ -145,7 +167,7 @@ namespace NppXmlTreeviewPlugin.Parsers
                     // Can be a single node.
                     sibling.EndPosition = new NppXmlNodePosition(xmlTextReader, true);
 
-                    ReadChildOrSibling(xmlTextReader, xmlTextReader.Depth, sibling);
+                    ReadChildOrSibling(xmlTextReader, xmlTextReader.Depth, sibling, nodeNameAttribute);
 
                     sibling.EndPosition = new NppXmlNodePosition(xmlTextReader, true);
 
@@ -164,7 +186,7 @@ namespace NppXmlTreeviewPlugin.Parsers
                 // Can be a single node.
                 child.EndPosition = new NppXmlNodePosition(xmlTextReader, true);
 
-                ReadChildOrSibling(xmlTextReader, xmlTextReader.Depth, child);
+                ReadChildOrSibling(xmlTextReader, xmlTextReader.Depth, child, nodeNameAttribute);
 
                 child.EndPosition = new NppXmlNodePosition(xmlTextReader, true);
             }
