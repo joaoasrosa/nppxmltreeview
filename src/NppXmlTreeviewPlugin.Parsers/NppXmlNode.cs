@@ -21,7 +21,7 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// </summary>
         /// <param name="name">The node name.</param>
         /// <param name="startPosition">The node start position.</param>
-        internal NppXmlNode(string name, NppXmlNodePosition startPosition)
+        private NppXmlNode(string name, NppXmlNodePosition startPosition)
         {
             this.Name = name;
             this.StartPosition = startPosition;
@@ -37,7 +37,7 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// <param name="name">The node name.</param>
         /// <param name="startPosition">The node start position.</param>
         /// <param name="parent">The parent node.</param>
-        internal NppXmlNode(string name, NppXmlNodePosition startPosition, NppXmlNode parent)
+        private NppXmlNode(string name, NppXmlNodePosition startPosition, NppXmlNode parent)
         {
             this.Name = name;
             this.StartPosition = startPosition;
