@@ -1,4 +1,5 @@
 #tool "nuget:?package=GitVersion.CommandLine"
+#tool "nuget:?package=xunit.runner.console&version=2.3.1"
 #addin "nuget:?package=Cake.DependenciesAnalyser&version=2.0.0"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -18,8 +19,6 @@ var testsDir = Directory("./tests");
 
 var solutions = GetFiles("./**/*.sln");
 
-var unitTestsProjects = GetFiles(testsDir.Path + "/**/*.Tests.Unit.csproj");
-
 GitVersion gitVersion = null;
 
 // USED TO CREATE ZIP PACKAGES
@@ -29,14 +28,6 @@ var createPackage = false;
 var artifactsDir = Directory("./artifacts");
 
 // VERBOSITY
-var dotNetCoreVerbosity = Cake.Common.Tools.DotNetCore.DotNetCoreVerbosity.Detailed;
-if (!Enum.TryParse(verbosity, true, out dotNetCoreVerbosity))
-{	
-    Warning(
-		"Verbosity could not be parsed into type 'Cake.Common.Tools.DotNetCore.DotNetCoreVerbosity'. Defaulting to {0}", 
-        dotNetCoreVerbosity); 
-}
-
 var msBuildVerbosity = Cake.Core.Diagnostics.Verbosity.Diagnostic;
 if (!Enum.TryParse(verbosity, true, out msBuildVerbosity))
 {	
@@ -49,23 +40,13 @@ if (!Enum.TryParse(verbosity, true, out msBuildVerbosity))
 // COMMON FUNCTION DEFINITIONS
 ///////////////////////////////////////////////////////////////////////////////
 
-void Test(FilePathCollection testProjects)
+void Test(string testDllGlob)
 {
-    var settings = new DotNetCoreTestSettings
-	{
-		Configuration = configuration,
-		NoBuild = false,
-        NoRestore = true,
-        Verbosity = dotNetCoreVerbosity
-	};
+	var settings = new XUnit2Settings();	
 
-	foreach(var testProject in testProjects)
-	{
-		Information("Testing '{0}'...",  testProject.FullPath);
-		// TODO: once move to XUnit2, remove the dotNetCoreVerbosity
-		DotNetCoreTest(testProject.FullPath, settings);
-		Information("'{0}' has been tested.", testProject.FullPath);
-	}
+	Information("Testing '{0}'...",  testDllGlob);
+	XUnit2(testDllGlob, settings);
+	Information("'{0}' has been tested.", testDllGlob);
 }
 
 void Build(PlatformTarget platformTarget)
@@ -194,7 +175,14 @@ Task("Build")
 
 Task("Test-Unit")
     .Description("Runs all your unit tests, using dotnet CLI.")
-    .Does(() => { Test(unitTestsProjects); });
+    .Does(() => 
+	{ 
+		var unitTestsProjects = $"./tests/**/bin/{configuration}/**/*.Tests.Unit.dll";
+		Test(unitTestsProjects); 
+
+		unitTestsProjects = $"./tests/**/bin/x64/{configuration}/**/*.Tests.Unit.dll";
+		Test(unitTestsProjects); 
+	});
 
 Task("Dependencies-Analyse")
     .Description("Runs the Dependencies Analyser on the solution.")

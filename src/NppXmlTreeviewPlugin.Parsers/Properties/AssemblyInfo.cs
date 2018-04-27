@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("João Rosa")]
 [assembly: AssemblyProduct("NppXmlTreeviewPlugin.Parsers")]
-[assembly: AssemblyCopyright("Copyright © João Rosa 2016")]
+[assembly: AssemblyCopyright("Copyright © João Rosa 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -22,9 +22,6 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("eaba4132-6e8c-41ec-b6f0-666efca5439a")]
 
-[assembly: InternalsVisibleTo("NppXmlTreeviewPlugin.Tests")]
-
-
 [assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyInformationalVersion("0.1.0-Cake-2.1+46.Branch.Cake_2.Sha.ee47094be49e845ce4b291a3f47ff12ae97fe275")]
+[assembly: AssemblyInformationalVersion("0.1.0-Tests.1+72.Branch.Tests.Sha.5e2564c49bfb09751501ab17e0e2dc099a839aea")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
