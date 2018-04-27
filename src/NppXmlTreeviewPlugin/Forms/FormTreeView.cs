@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NppPluginNET;
@@ -260,7 +261,7 @@ namespace NppXmlTreeviewPlugin.Forms
             }
             for (var i = 0; i < inXmlNode.ChildNodes.Count; i++)
             {
-                var xNode = inXmlNode.ChildNodes[i];
+                var xNode = inXmlNode.ChildNodes.ElementAt(i);
 
                 if (this.treeView.InvokeRequired)
                 {
