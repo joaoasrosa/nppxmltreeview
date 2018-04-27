@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<atc:experiment 
+  xmlns:atc="http://www.humanfactors.uq.edu.au/atc/2006/atc-ns" 
+  atc:idx="Experiment1" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.humanfactors.uq.edu.au/atc/2006/atc-ns atc_experiment.xsd">
+
+	<!-- ===================================================================== -->
+	<!-- =============================== Configuration ======================= -->
+	<!-- ===================================================================== -->
+
+	<atc:config>
+
+		<!-- Units -->
+		<atc:units>
+			<atc:input>NM-FT</atc:input>
+		</atc:units>
+
+		<!-- Aircraft -->
+		<atc:aircraftParam atc:idx="B737">
+			<atc:speed>420</atc:speed>
+			<atc:level>370</atc:level>
+			<atc:RoC atc:maxLevel="250">2000</atc:RoC>
+			<atc:RoC atc:minLevel="250">1000</atc:RoC>
+		</atc:aircraftParam>
+
+		<atc:aircraftParam atc:idx="B727">
+			<atc:speed>450</atc:speed>
+			<atc:level>370</atc:level>
+			<atc:RoC atc:maxLevel="250">2000</atc:RoC>
+			<atc:RoC atc:minLevel="250">1000</atc:RoC>
+		</atc:aircraftParam>
+
+		<atc:aircraftParam atc:idx="B767">
+			<atc:speed>450</atc:speed>
+			<atc:level>470</atc:level>
+			<atc:RoC atc:maxLevel="250">1500</atc:RoC>
+			<atc:RoC atc:minLevel="250">500</atc:RoC>
+		</atc:aircraftParam>
+
+		<atc:aircraftParam atc:idx="B764">
+			<atc:speed>450</atc:speed>
+			<atc:level>470</atc:level>
+			<atc:RoC atc:maxLevel="250">1500</atc:RoC>
+			<atc:RoC atc:minLevel="250">500</atc:RoC>
+		</atc:aircraftParam>
+
+		<atc:aircraftParam atc:idx="B747">
+			<atc:speed>480</atc:speed>
+			<atc:level>430</atc:level>
+			<atc:RoC atc:maxLevel="250">2000</atc:RoC>
+			<atc:RoC atc:minLevel="250">1000</atc:RoC>
+		</atc:aircraftParam>
+
+		<atc:aircraftParam atc:idx="B717">
+			<atc:speed>440</atc:speed>
+			<atc:level>370</atc:level>
+			<atc:RoC atc:maxLevel="250">2000</atc:RoC>
+			<atc:RoC atc:minLevel="250">1000</atc:RoC>
+		</atc:aircraftParam>
+
+		<atc:aircraftParam atc:idx="A300">
+			<atc:speed>490</atc:speed>
+			<atc:level>430</atc:level>
+			<atc:RoC atc:maxLevel="250">2000</atc:RoC>
+			<atc:RoC atc:minLevel="250">1000</atc:RoC>
+		</atc:aircraftParam>
+
+		<atc:aircraftParam atc:idx="A320">
+			<atc:speed>450</atc:speed>
+			<atc:level>390</atc:level>
+			<atc:RoC atc:maxLevel="250">2000</atc:RoC>
+			<atc:RoC atc:minLevel="250">1000</atc:RoC>
+		</atc:aircraftParam>
+
+		<atc:aircraftParam atc:idx="A330">
+			<atc:speed>470</atc:speed>
+			<atc:level>430</atc:level>
+			<atc:RoC atc:maxLevel="250">2000</atc:RoC>
+			<atc:RoC atc:minLevel="250">1000</atc:RoC>
+		</atc:aircraftParam>
+
+		<atc:aircraftParam atc:idx="B762">
+			<atc:speed>210</atc:speed>
+			<atc:level>250</atc:level>
+			<atc:RoC atc:maxLevel="250">2000</atc:RoC>
+			<atc:RoC atc:minLevel="250">1000</atc:RoC>
+		</atc:aircraftParam>
+
+		<atc:aircraftParam atc:idx="B744">	
+			<atc:speed>205</atc:speed>
+			<atc:level>240</atc:level>
+			<atc:RoC atc:maxLevel="250">1500</atc:RoC>
+			<atc:RoC atc:minLevel="250">1000</atc:RoC>
+		</atc:aircraftParam>
+
+		<!-- Instruction -->
+		<atc:instruction atc:idx="Rest">
+			<atc:text>
+				<![CDATA[<qt>
+          <center>
+            <table width="60%" bgcolor="darkCyan" border="0" cellspacing="0" cellpadding="50">
+            <tr><td align="left"><font face="verdana" size="1">
+              <p align="center"><font size="+1">Please wait for the next trial to start.</font></p>
+            </font></td></tr>
+            </table>
+          </center>
+        </qt>]]>
+			</atc:text>
+			<atc:timeEvent>30</atc:timeEvent>
+			<atc:showCountdown>true</atc:showCountdown>
+		</atc:instruction>
+
+		<atc:instruction atc:idx="Restlong">
+			<atc:text>
+				<![CDATA[<qt>
+          <center>
+            <table width="60%" bgcolor="darkCyan" border="0" cellspacing="0" cellpadding="50">
+            <tr><td align="left"><font face="verdana" size="1">
+              <p align="center"><font size="+1">You have five minutes to rest. Please inform the experimenter.</font></p>
+            </font></td></tr>
+            </table>
+          </center>
+        </qt>]]>
+			</atc:text>
+			<atc:timeEvent>300</atc:timeEvent>
+			<atc:showCountdown>true</atc:showCountdown>
+		</atc:instruction>
+
+		<atc:instruction atc:idx="Start">
+			<atc:text>
+				<![CDATA[<qt>
+          <center>
+            <table width="60%" bgcolor="darkCyan" border="0" cellspacing="0" cellpadding="50">
+            <tr><td align="left"><font face="verdana" size="1">
+              <p align="center"><font size="+1">Press the [SPACE] key to begin the experiment.</font></p>
+            </font></td></tr>
+            </table>
+          </center>
+        </qt>]]>
+			</atc:text>
+			<atc:keyEvent>Space</atc:keyEvent>
+		</atc:instruction>
+
+		<atc:instruction atc:idx="End">
+			<atc:text>
+				<![CDATA[<qt>
+          <center>
+            <table width="60%" bgcolor="darkCyan" border="0" cellspacing="0" cellpadding="50">
+            <tr><td align="left"><font face="verdana" size="1">
+              <p align="center"><font size="+1">This is the end of the experiment. Thank you for participating.</font></p>
+              <p align="center"><font color="red"><b>Press the [SPACE] key to continue<b></font></p>
+            </font></td></tr>
+            </table>
+          </center>
+        </qt>]]>
+			</atc:text>
+			<atc:keyEvent>Space</atc:keyEvent>
+		</atc:instruction>
+
+		<!-- =============================================================================== -->
+		<!-- ============================== VARIABLES & SETTINGS =========================== -->
+		<!-- =============================================================================== -->
+
+	</atc:config>
+
+	<atc:data>
+
+		<atc:param atc:idx='default'>
+			<atc:sectorEntryDistance>5</atc:sectorEntryDistance>
+			<atc:sectorExitDistance>1</atc:sectorExitDistance>
+			<atc:update_rate>1000</atc:update_rate>
+			<atc:update_multiplier>1</atc:update_multiplier>
+			<atc:horizontal_doms>5</atc:horizontal_doms>
+			<atc:vertical_doms>0</atc:vertical_doms>
+		</atc:param>
+
+		<atc:map atc:idx='map2'>
+			<!--
+      <atc:region atc:x='0' atc:y='0' atc:x_dim='100' atc:y_dim='75' />
+      -->
+			<atc:region atc:x='0' atc:y='0' atc:x_dim='70' atc:y_dim='52.5' />
+			<atc:location atc:idx="one"      atc:visible="off" atc:x='70'      atc:y='35' />
+			<atc:location atc:idx="two"    atc:visible="off" atc:x='0'       atc:y='35' />
+			<atc:location atc:idx="three"    atc:visible="off" atc:x='0'       atc:y='18' />
+			<atc:location atc:idx="four"       atc:visible="off" atc:x='70'      atc:y='18' />
+			<atc:location atc:idx="five"       atc:visible="off" atc:x='18' atc:y='52.5'    />
+			<atc:location atc:idx="six"       atc:visible="off" atc:x='18'  atc:y='8'    />
+			<atc:location atc:idx="seven"       atc:visible="off" atc:x='12'  atc:y='0'    />
+			<atc:location atc:idx="eight"     atc:visible="off" atc:x='65' atc:y='52.5'       />
+			<atc:location atc:idx="nine"      atc:visible="off" atc:x='49' atc:y='42'       />
+			<atc:location atc:idx="ninebravo"      atc:visible="off" atc:x='32.4' atc:y='27'       />
+			<atc:location atc:idx="tenalpha"       atc:visible="off" atc:x='24' atc:y='18'       />			
+			<atc:location atc:idx="ten"       atc:visible="off" atc:x='24' atc:y='0'       />			
+			<atc:location atc:idx="eleven"     atc:visible="off" atc:x='43' atc:y='0'       />
+			<atc:location atc:idx="twelve"      atc:visible="off" atc:x='43' atc:y='8'       />
+			<atc:location atc:idx="thirteen"       atc:visible="off" atc:x='32.4' atc:y='18'       />
+			<atc:location atc:idx="fourteen"       atc:visible="off" atc:x='32.4' atc:y='52.5'       />
+			<atc:location atc:idx="fifteen"      atc:visible="off" atc:x='49' atc:y='52.5'       />
+			<atc:location atc:idx="sixteen"      atc:visible="off" atc:x='49' atc:y='0'       />
+
+			<atc:route atc:idx="routeA">     
+				<atc:pointref atc:location="one"/>
+				<atc:pointref atc:location="two"/>
+			</atc:route>
+
+			<atc:route atc:idx="routeB">     
+				<atc:pointref atc:location="three"/>
+				<atc:pointref atc:location="four"/>
+			</atc:route>
+
+			<atc:route atc:idx="routeC">     
+				<atc:pointref atc:location="five"/>
+				<atc:pointref atc:location="six"/>
+				<atc:pointref atc:location="seven"/>
+			</atc:route>
+
+			<atc:route atc:idx="routeD">     
+				<atc:pointref atc:location="eight"/>
+				<atc:pointref atc:location="nine"/>	
+				<atc:pointref atc:location="ninebravo"/>
+				<atc:pointref atc:location="tenalpha"/>
+				<atc:pointref atc:location="ten"/>
+			</atc:route>
+
+			<atc:route atc:idx="routeE">     
+				<atc:pointref atc:location="eleven"/>
+				<atc:pointref atc:location="twelve"/>
+				<atc:pointref atc:location="thirteen"/>
+				<atc:pointref atc:location="fourteen"/>
+			</atc:route>
+
+			<atc:route atc:idx="routeF">     
+				<atc:pointref atc:location="fifteen"/>
+				<atc:pointref atc:location="sixteen"/>
+			</atc:route>
+
+			<atc:sector atc:idx="willy" atc:status="active">
+				<!-- ==============1================ -->
+				<atc:vertex atc:x='10' atc:y='45' />
+				<!-- ==============2================ -->				
+				<atc:vertex atc:x='49' atc:y='42' />
+				<!-- ==============3A=============== -->				
+				<atc:vertex atc:x='58' atc:y='33' />
+				<!-- ==============3B=============== -->				
+				<atc:vertex atc:x='61' atc:y='18' />				
+				<!-- ==============4================ -->				
+				<atc:vertex atc:x='53' atc:y='10' />
+				<!-- ==============5================ -->				
+				<atc:vertex atc:x='43' atc:y='8'  />
+				<!-- ==============6================ -->				
+				<atc:vertex atc:x='18' atc:y='8' />
+				<!-- ==============7================ -->				
+				<atc:vertex atc:x='12' atc:y='18' />
+				<!-- ==============8================ -->				
+				<atc:vertex atc:x='9' atc:y='35' />
+
+			</atc:sector>
+		</atc:map>
+
+		<!-- ===================================================================== -->
+		<!-- =========================== SCRIPTS ================================= -->
+		<!-- ===================================================================== -->
+
+		<!-- ================================= -->
+		<!-- =============== 1 =============== -->
+		<!-- ===========INTSTIME 1========= -->
+		<!-- ================================= -->		
+		<atc:sky atc:idx='INT1'> 	
+
+			<!-- ======================Conflicts========================= -->
+
+			<atc:aircraft atc:idx="GY58" atc:type="A330">
+				<atc:start>0</atc:start>
+				<atc:altitude>40000</atc:altitude>
+				<atc:velocity>460</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='50' atc:y='35'/>
+					<atc:point atc:x='0' atc:y='35'/>
+				</atc:flightpath>
+				<atc:conflictDetails>
+					<atc:trial>trial1</atc:trial>
+					<atc:acceptanceTime>0</atc:acceptanceTime>
+					<atc:conflictTime>17</atc:conflictTime>
+					<atc:conflictAircraft>GH21</atc:conflictAircraft>
+				</atc:conflictDetails>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="GH21" atc:type="B737">
+				<atc:start>0</atc:start>
+				<atc:altitude>40000</atc:altitude>
+				<atc:velocity>480</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='48.2806' atc:y='41.35'/>
+					<atc:point atc:x='32.4' atc:y='27'/>
+					<atc:point atc:x='24' atc:y='18'/>
+					<atc:point atc:x='24' atc:y='0'/>
+				</atc:flightpath>
+				<atc:conflictDetails>
+					<atc:trial>trial1</atc:trial>
+					<atc:acceptanceTime>0</atc:acceptanceTime>
+					<atc:conflictTime>17</atc:conflictTime>
+					<atc:conflictAircraft>GY58</atc:conflictAircraft>
+				</atc:conflictDetails>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="UK34" atc:type="B764">
+				<atc:start>0</atc:start>
+				<atc:altitude>34000</atc:altitude>
+				<atc:velocity>480</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='35.72' atc:y='30'/>
+					<atc:point atc:x='32.4' atc:y='27'/>
+					<atc:point atc:x='24' atc:y='18'/>
+					<atc:point atc:x='24' atc:y='0'/>
+				</atc:flightpath>
+				<atc:conflictDetails>
+					<atc:trial>trial1</atc:trial>
+					<atc:acceptanceTime>0</atc:acceptanceTime>
+					<atc:conflictTime>26</atc:conflictTime>
+					<atc:conflictAircraft>DE68</atc:conflictAircraft>
+				</atc:conflictDetails>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="DE68" atc:type="B764">
+				<atc:start>0</atc:start>
+				<atc:altitude>34000</atc:altitude>
+				<atc:velocity>480</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='33.46' atc:y='17'/>
+					<atc:point atc:x='32.4' atc:y='18'/>
+					<atc:point atc:x='32.4' atc:y='52.5'/>
+				</atc:flightpath>
+				<atc:conflictDetails>
+					<atc:trial>trial1</atc:trial>
+					<atc:acceptanceTime>0</atc:acceptanceTime>
+					<atc:conflictTime>26</atc:conflictTime>
+					<atc:conflictAircraft>UK34</atc:conflictAircraft>
+				</atc:conflictDetails>
+			</atc:aircraft>
+
+			<!-- ======================Hand Offs========================= -->
+
+			<atc:aircraft atc:idx="OS89" atc:type="A320">
+				<atc:start>0</atc:start>
+				<atc:altitude>43000</atc:altitude>
+				<atc:velocity>470</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='18' atc:y='9'/>
+					<atc:point atc:x='18' atc:y='8'/>
+					<atc:point atc:x='12' atc:y='0'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="UK25" atc:type="B744">
+				<atc:start>0</atc:start>
+				<atc:altitude>35000</atc:altitude>
+				<atc:velocity>480</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='59' atc:y='18'/>
+					<atc:point atc:x='70' atc:y='18'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<!-- ======================Accepts========================= -->
+			<atc:aircraft atc:idx="UK17" atc:type="B747">
+				<atc:start>0</atc:start>
+				<atc:altitude>35000</atc:altitude>
+				<atc:velocity>500</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='8' atc:y='18'/>
+					<atc:point atc:x='70' atc:y='18'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="AS12" atc:type="B737">
+				<atc:start>0</atc:start>
+				<atc:altitude>31000</atc:altitude>
+				<atc:velocity>480</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='54.7142857142857' atc:y='45.75'/>
+					<atc:point atc:x='49' atc:y='42'/>
+					<atc:point atc:x='32.4' atc:y='27'/>
+					<atc:point atc:x='24' atc:y='18'/>
+					<atc:point atc:x='24' atc:y='0'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="XJ77" atc:type="A320">
+				<atc:start>0</atc:start>
+				<atc:altitude>38000</atc:altitude>
+				<atc:velocity>460</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='63.5' atc:y='35'/>
+					<atc:point atc:x='0' atc:y='35'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<!-- ======================Noise========================= -->
+			<atc:aircraft atc:idx="ZF02" atc:type="A320">
+				<atc:start>0</atc:start>
+				<atc:altitude>34000</atc:altitude>
+				<atc:velocity>480</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='17' atc:y='35'/>
+					<atc:point atc:x='0' atc:y='35'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="ZF54" atc:type="A330">
+				<atc:start>0</atc:start>
+				<atc:altitude>40000</atc:altitude>
+				<atc:velocity>480</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='18' atc:y='40'/>
+					<atc:point atc:x='18' atc:y='8'/>
+					<atc:point atc:x='12' atc:y='0'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="AS34" atc:type="B767">
+				<atc:start>15</atc:start>
+				<atc:altitude>38000</atc:altitude>
+				<atc:velocity>450</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='18' atc:y='52.5'/>
+					<atc:point atc:x='18' atc:y='8'/>
+					<atc:point atc:x='12' atc:y='0'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="JM74" atc:type="B744">
+				<atc:start>0</atc:start>
+				<atc:altitude>39000</atc:altitude>
+				<atc:velocity>460</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='36' atc:y='35'/>
+					<atc:point atc:x='0' atc:y='35'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="YK28" atc:type="B764">
+				<atc:start>10</atc:start>
+				<atc:altitude>36000</atc:altitude>
+				<atc:velocity>480</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='0' atc:y='18'/>
+					<atc:point atc:x='70' atc:y='18'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="ZM40" atc:type="B764">
+				<atc:start>0</atc:start>
+				<atc:altitude>34000</atc:altitude>
+				<atc:velocity>430</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='43' atc:y='0'/>
+					<atc:point atc:x='43' atc:y='8'/>
+					<atc:point atc:x='32.4' atc:y='18'/>
+					<atc:point atc:x='32.4' atc:y='52.5'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="YK57" atc:type="A330">
+				<atc:start>0</atc:start>
+				<atc:altitude>39000</atc:altitude>
+				<atc:velocity>480</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='32.4' atc:y='48'/>
+					<atc:point atc:x='32.4' atc:y='52.5'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="SV36" atc:type="B767">
+				<atc:start>0</atc:start>
+				<atc:altitude>32000</atc:altitude>
+				<atc:velocity>450</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='49' atc:y='30.5'/>
+					<atc:point atc:x='49' atc:y='0'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+			<atc:aircraft atc:idx="JM56" atc:type="B747">
+				<atc:start>10</atc:start>
+				<atc:altitude>40000</atc:altitude>
+				<atc:velocity>480</atc:velocity>
+				<atc:flightpath>
+					<atc:point atc:x='65' atc:y='52.5'/>
+					<atc:point atc:x='49' atc:y='42'/>
+					<atc:point atc:x='32.4' atc:y='27'/>
+					<atc:point atc:x='24' atc:y='18'/>
+					<atc:point atc:x='24' atc:y='0'/>
+				</atc:flightpath>
+			</atc:aircraft>
+
+		</atc:sky>
+
+		<!-- ===================================================================== -->
+		<!-- =========================== TEST ORDER ============================== -->
+		<!-- ===================================================================== -->
+
+		<atc:ui atc:idx='ui001'>
+			<atc:clock>false</atc:clock>
+		</atc:ui>
+
+	</atc:data>
+
+	<atc:presentation>	
+
+		<atc:phase atc:idx='phase-test'>
+			<atc:trial atc:idx='INTID1' atc:param='default' atc:map="map2" atc:sky="INT1" atc:ui="ui001" atc:notify_missed_acceptance='false' atc:notify_missed_handoff='false' atc:disable_callout_rotation='true'>
+				<atc:timeEvent>26</atc:timeEvent>
+				<atc:info_box atc:x='0' atc:y='0' atc:font='Courier New' atc:font_size='50' atc:font_colour='red' atc:border='true'>Interrupting Scenario</atc:info_box>
+				<atc:nbackTask atc:start='0' atc:end='2' atc:auto_handoff='false' atc:auto_accept='false' atc:background_colour='black' atc:response_key='space' atc:n_factor='2' atc:reptition_probability='40' atc:show_task='true'>
+					<atc:initial_display atc:symbol='+' atc:font='Courier' atc:font_size='50' atc:font_colour='white' atc:duration_ms='2000' atc:show_timer='false' atc:x='840' atc:y='525'/>
+					<atc:stimuli atc:font='SansSerif' atc:font_size='50' atc:font_colour='white' atc:display_duration_ms='2000' atc:show_timer='false' atc:x='840' atc:y='485' />
+					<atc:correct_feedback atc:symbol='circle' atc:colour='green' atc:width='15' atc:height='15' atc:x='854' atc:y='575'/>
+					<atc:incorrect_feedback atc:symbol='square' atc:colour='red' atc:width='15' atc:height='15' atc:x='854' atc:y='575'/>
+					<atc:timer atc:font='SansSerif' atc:font_size='20' atc:font_colour='black' atc:x='465' atc:y='450' />
+				</atc:nbackTask>
+			</atc:trial>			
+
+		</atc:phase>
+
+	</atc:presentation>
+
+</atc:experiment>
+
