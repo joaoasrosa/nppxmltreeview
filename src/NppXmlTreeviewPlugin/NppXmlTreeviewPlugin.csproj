@@ -129,11 +129,6 @@
   <ItemGroup>
     <None Include="Resources\node-name.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="debug.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)\DllExport\NppPlugin.DllExport.targets" />
   <PropertyGroup>
