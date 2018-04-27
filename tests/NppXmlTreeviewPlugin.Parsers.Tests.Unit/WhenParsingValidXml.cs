@@ -11,7 +11,7 @@ namespace NppXmlTreeviewPlugin.Parsers.Tests.Unit
         [Theory]
         [InlineData(@"./TestFiles/NPP_comments.xml")]
         [InlineData(@"./TestFiles/NPP_nocomments.xml")]
-        public void GivenValidXml_ThenFoo(string path)
+        public void GivenValidXml_ThenTryParseIsValid(string path)
         {
             var xml = File.ReadAllText(path);
 
@@ -19,7 +19,21 @@ namespace NppXmlTreeviewPlugin.Parsers.Tests.Unit
 
             var result = NppXmlNode.TryParse(xml, out nppXmlNode);
 
-            result.Should().BeTrue();
+            result.Should().BeTrue(because: "the XML is valid");
+        }
+
+        [Theory]
+        [InlineData(@"./TestFiles/NPP_comments.xml", 3)]
+        [InlineData(@"./TestFiles/NPP_nocomments.xml", 3)]
+        public void GivenValidXml_ThenNumberOfChildNodesMatch(string path, int nodeCount)
+        {
+            var xml = File.ReadAllText(path);
+
+            NppXmlNode nppXmlNode;
+
+            NppXmlNode.TryParse(xml, out nppXmlNode);
+
+            nppXmlNode.ChildNodes.Count.Should().Be(nodeCount, because: $"the number of child nodes is {nodeCount}");
         }
     }
 }
