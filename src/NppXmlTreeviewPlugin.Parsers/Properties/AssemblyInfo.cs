@@ -26,5 +26,5 @@ using System.Runtime.InteropServices;
 
 
 [assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyInformationalVersion("0.1.0-Cake-2.1+42.Branch.Cake_2.Sha.2ae9ef6d57f671dfb1d3ded7914c16afc57b7da7")]
+[assembly: AssemblyInformationalVersion("0.1.0-Cake-2.1+44.Branch.Cake_2.Sha.93f888a62b1cddd853bfaedf446d5440ecbe97fa")]
 [assembly: AssemblyFileVersion("0.1.0.0")]

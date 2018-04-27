@@ -62,6 +62,7 @@ void Test(FilePathCollection testProjects)
 	foreach(var testProject in testProjects)
 	{
 		Information("Testing '{0}'...",  testProject.FullPath);
+		// TODO: once move to XUnit2, remove the dotNetCoreVerbosity
 		DotNetCoreTest(testProject.FullPath, settings);
 		Information("'{0}' has been tested.", testProject.FullPath);
 	}
@@ -141,17 +142,17 @@ Task("Restore")
 	.Description("Restores all the NuGet packages that are used by the specified solution.")
 	.Does(() => 
     {
-        var settings = new DotNetCoreRestoreSettings
-        {
-            DisableParallel = false,
-            NoCache = true,
-            Verbosity = dotNetCoreVerbosity
-        };
+		var settings = new NuGetRestoreSettings 
+		{ 
+			MSBuildVersion = NuGetMSBuildVersion.MSBuild14,
+			NoCache = true,
+			Verbosity = NuGetVerbosity.Normal
+		};
         
         foreach(var solution in solutions)
         {
             Information("Restoring NuGet packages for '{0}'...", solution);
-            DotNetCoreRestore(solution.FullPath, settings);
+			NuGetRestore(solution, settings);
             Information("NuGet packages restored for '{0}'.", solution);
         }
     });
@@ -221,18 +222,19 @@ Task("Pack")
             return;
         }
 
-		var patternFolder = "./src/NppXmlTreeviewPlugin/bin/{0}/net46/win-{1}/";
+		var patternFolder = "./src/NppXmlTreeviewPlugin/bin/{0}/";
 		var patternOutput = "{0}/NppXMLTreeViewPlugin_{1}.zip";
 		var platform = "x86";
 
         Pack(
-		  string.Format(patternFolder, configuration, platform),
+		  string.Format(patternFolder, configuration),
 		  string.Format(patternOutput, artifactsDir.Path, platform));
 
+		patternFolder = "./src/NppXmlTreeviewPlugin/bin/x64/{0}/";
 		platform = "x64";
 
         Pack(
-		  string.Format(patternFolder, configuration, platform),
+		  string.Format(patternFolder, configuration),
 		  string.Format(patternOutput, artifactsDir.Path, platform));
     });
 
@@ -275,7 +277,7 @@ Task("LocalPack")
     .IsDependentOn("SemVer")
     .IsDependentOn("Build")
     .IsDependentOn("Test-Unit")
-    .IsDependentOn("Dependencies-Analyse")
+    //.IsDependentOn("Dependencies-Analyse")
     .IsDependentOn("Local-Pack")
     .IsDependentOn("Pack")
     .Does(() => { Information("Everything is done! Well done Local Pack."); });
@@ -287,7 +289,7 @@ Task("AppVeyor")
     .IsDependentOn("SemVer")
     .IsDependentOn("Build")
     .IsDependentOn("Test-Unit")
-    .IsDependentOn("Dependencies-Analyse")
+    //.IsDependentOn("Dependencies-Analyse")
     .IsDependentOn("AppVeyor-Pack")
     .IsDependentOn("Pack")
     .Does(() => { Information("Everything is done! Well done AppVeyor."); });
