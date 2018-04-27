@@ -141,7 +141,8 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// </summary>
         /// <param name="xmlTextReader">The XML text reader.</param>
         /// <param name="currentDepth">The current depth on the XML tree.</param>
-        /// <param name="node">The XML node</param>
+        /// <param name="node">The XML node.</param>
+        /// <param name="nodeNameAttribute">The node attribute name.</param>
         private static void ReadChildOrSibling(XmlTextReader xmlTextReader, int currentDepth, NppXmlNode node, string nodeNameAttribute)
         {
             var nodeName = xmlTextReader.Name;
