@@ -13,7 +13,7 @@ namespace NppXmlTreeviewPlugin.Parsers
     /// </summary>
     public class NppXmlNode
     {
-        private static int nodeId = 1;
+        private static int _nodeId = 1;
 
         /// <summary>
         ///     The start position of the node.
@@ -43,7 +43,7 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// <summary>
         ///     The parent of the node.
         /// </summary>
-        public NppXmlNode Parent { get; }
+        private NppXmlNode Parent { get; }
 
         /// <summary>
         ///     Flag to indicate if the node has child nodes.
@@ -61,10 +61,10 @@ namespace NppXmlTreeviewPlugin.Parsers
         {
             Name = name;
             StartPosition = startPosition;
-            Id = nodeId;
+            Id = _nodeId;
             _childNodes = new List<NppXmlNode>();
 
-            nodeId++;
+            _nodeId++;
         }
 
         /// <summary>
@@ -78,10 +78,10 @@ namespace NppXmlTreeviewPlugin.Parsers
             Name = name;
             StartPosition = startPosition;
             Parent = parent;
-            Id = nodeId;
+            Id = _nodeId;
             _childNodes = new List<NppXmlNode>();
 
-            nodeId++;
+            _nodeId++;
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace NppXmlTreeviewPlugin.Parsers
         public static bool TryParse(string xml, string nodeNameAttribute, ILogger logger, out NppXmlNode nppXmlNode)
         {
             nppXmlNode = null;
-            nodeId = 1;
+            _nodeId = 1;
 
             try
             {
