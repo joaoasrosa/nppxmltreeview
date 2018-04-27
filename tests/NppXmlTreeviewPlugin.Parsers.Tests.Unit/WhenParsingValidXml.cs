@@ -10,7 +10,7 @@ namespace NppXmlTreeviewPlugin.Parsers.Tests.Unit
     {
         [Theory]
         [InlineData(@"./TestFiles/NPP_comments.xml")]
-        [InlineData(@"./Test/FilesNPP_nocomments.xml")]
+        [InlineData(@"./TestFiles/NPP_nocomments.xml")]
         public void GivenValidXml_ThenFoo(string path)
         {
             var xml = File.ReadAllText(path);
