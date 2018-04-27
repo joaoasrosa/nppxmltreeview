@@ -9,8 +9,8 @@ namespace NppXmlTreeviewPlugin.Parsers.Tests.Unit
     public class WhenParsingValidXml
     {
         [Theory]
-        [InlineData(@"./TestFiles/NPP_comments.xml")]
-        [InlineData(@"./TestFiles/NPP_nocomments.xml")]
+        [InlineData(@"./TestFiles/valid_comments.xml")]
+        [InlineData(@"./TestFiles/valid_nocomments.xml")]
         public void GivenValidXml_ThenTryParseIsValid(string path)
         {
             var xml = File.ReadAllText(path);
@@ -23,8 +23,8 @@ namespace NppXmlTreeviewPlugin.Parsers.Tests.Unit
         }
 
         [Theory]
-        [InlineData(@"./TestFiles/NPP_comments.xml", 3)]
-        [InlineData(@"./TestFiles/NPP_nocomments.xml", 3)]
+        [InlineData(@"./TestFiles/valid_comments.xml", 3)]
+        [InlineData(@"./TestFiles/valid_nocomments.xml", 3)]
         public void GivenValidXml_ThenNumberOfChildNodesMatch(string path, int nodeCount)
         {
             var xml = File.ReadAllText(path);
