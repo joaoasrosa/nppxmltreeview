@@ -99,6 +99,19 @@ void Pack(string directory, string outputFile)
     Information("'{0}' has been compressed to '{1}'.", directory, outputFile);
 }
 
+void CopyPlugin(string source, string destination)
+{
+	var directoryToClean = string.Format("{0}*.pdb", source);
+
+    Information("Cleaning '{0}'...", directoryToClean);
+	DeleteFiles(directoryToClean);	
+    Information("'{0}' has been cleaned.", directoryToClean);
+
+    Information("Copying '{0}' to '{1}'...", source, destination);
+	CopyDirectory(source, destination);	
+    Information("'{0}' has been copied to '{1}'.", source, destination);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
@@ -238,6 +251,23 @@ Task("Pack")
 		  string.Format(patternOutput, artifactsDir.Path, platform));
     });
 
+Task("Local-Deploy")
+    .Description("Deploys the puglin, using local environment.")
+    .Does(() =>
+    {
+        var patternFolder = "./src/NppXmlTreeviewPlugin/bin/{0}/";
+
+		CopyPlugin(
+		  string.Format(patternFolder, configuration),
+		  @"C:\Program Files (x86)\Notepad++\plugins");
+
+		patternFolder = "./src/NppXmlTreeviewPlugin/bin/x64/{0}/";
+		
+		CopyPlugin(
+		  string.Format(patternFolder, configuration),
+		  @"C:\Program Files\Notepad++\plugins");
+    });
+
 ///////////////////////////////////////////////////////////////////////////////
 // COMBINATIONS - let's make life easier...
 ///////////////////////////////////////////////////////////////////////////////
@@ -280,7 +310,18 @@ Task("LocalPack")
     //.IsDependentOn("Dependencies-Analyse")
     .IsDependentOn("Local-Pack")
     .IsDependentOn("Pack")
-    .Does(() => { Information("Everything is done! Well done Local Pack."); });
+    .Does(() => { Information("Everything is done! Well done Local Pack."); }); 
+
+Task("LocalDeploy")
+    .Description("Runs locally.")
+    .IsDependentOn("Clean")
+    .IsDependentOn("Restore")
+    .IsDependentOn("SemVer")
+    .IsDependentOn("Build")
+    .IsDependentOn("Test-Unit")
+    //.IsDependentOn("Dependencies-Analyse")
+    .IsDependentOn("Local-Deploy")
+    .Does(() => { Information("Everything is done! Well done Local Deploy."); });
 
 Task("AppVeyor")
     .Description("Runs on AppVeyor after 'merging master'.")
