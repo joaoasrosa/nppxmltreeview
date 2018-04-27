@@ -4,7 +4,7 @@ build_script:
 - ps: .\build.ps1 --target=AppVeyor --configuration=Release
 test: off
 artifacts:
-- path: NppXmlTreeviewPlugin_*.zip
+- path: .\artifacts\NppXmlTreeviewPlugin_*.zip
   name: nppxmltreeview
 deploy:
 - provider: GitHub
