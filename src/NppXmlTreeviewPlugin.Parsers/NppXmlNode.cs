@@ -84,23 +84,23 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// Method to try parse the XML.
         /// </summary>
         /// <param name="xml">The XMl as string.</param>
-        /// <param name="nppXmlNode">The Notepad++ XmlNode.</param>
         /// <param name="logger">The logger.</param>
+        /// <param name="nppXmlNode">The Notepad++ XmlNode.</param>
         /// <returns>True if parse successfully, false otherwise.</returns>
-        public static bool TryParse(string xml, out NppXmlNode nppXmlNode, ILogger logger)
+        public static bool TryParse(string xml, ILogger logger, out NppXmlNode nppXmlNode)
         {
-            return TryParse(xml, out nppXmlNode, null, logger);
+            return TryParse(xml, null, logger, out nppXmlNode);
         }
 
         /// <summary>
         /// Method to try parse the XML.
         /// </summary>
         /// <param name="xml">The XMl as string.</param>
-        /// <param name="nppXmlNode">The Notepad++ XmlNode.</param>
         /// <param name="nodeNameAttribute">The attribute, that will be used as node name. If no one of that attribute, tag name will be used</param>
         /// <param name="logger">The logger.</param>
+        /// <param name="nppXmlNode">The Notepad++ XmlNode.</param>
         /// <returns>True if parse successfully, false otherwise.</returns>
-        public static bool TryParse(string xml, out NppXmlNode nppXmlNode, string nodeNameAttribute, ILogger logger)
+        public static bool TryParse(string xml, string nodeNameAttribute, ILogger logger, out NppXmlNode nppXmlNode)
         {
             nppXmlNode = null;
             nodeId = 1;

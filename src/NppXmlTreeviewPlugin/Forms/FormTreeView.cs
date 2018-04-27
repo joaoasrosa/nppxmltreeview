@@ -113,7 +113,7 @@ namespace NppXmlTreeviewPlugin.Forms
             string attributeName = attributeNameTextBox.Enabled ? attributeNameTextBox.Text : null;
 
             // Do validations.
-            if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out this._rootNode, attributeName, _logger))
+            if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), attributeName, _logger, out this._rootNode))
             {
                 if (this.LabelStatus.InvokeRequired)
                 {
