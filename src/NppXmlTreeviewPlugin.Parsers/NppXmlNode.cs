@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 
+using Serilog;
+
 namespace NppXmlTreeviewPlugin.Parsers
 {
     /// <summary>
@@ -83,10 +85,11 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// </summary>
         /// <param name="xml">The XMl as string.</param>
         /// <param name="nppXmlNode">The Notepad++ XmlNode.</param>
+        /// <param name="logger">The logger.</param>
         /// <returns>True if parse successfully, false otherwise.</returns>
-        public static bool TryParse(string xml, out NppXmlNode nppXmlNode)
+        public static bool TryParse(string xml, out NppXmlNode nppXmlNode, ILogger logger)
         {
-            return TryParse(xml, out nppXmlNode, null);
+            return TryParse(xml, out nppXmlNode, null, logger);
         }
 
         /// <summary>
@@ -95,8 +98,9 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// <param name="xml">The XMl as string.</param>
         /// <param name="nppXmlNode">The Notepad++ XmlNode.</param>
         /// <param name="nodeNameAttribute">The attribute, that will be used as node name. If no one of that attribute, tag name will be used</param>
+        /// <param name="logger">The logger.</param>
         /// <returns>True if parse successfully, false otherwise.</returns>
-        public static bool TryParse(string xml, out NppXmlNode nppXmlNode, string nodeNameAttribute)
+        public static bool TryParse(string xml, out NppXmlNode nppXmlNode, string nodeNameAttribute, ILogger logger)
         {
             nppXmlNode = null;
             nodeId = 1;
@@ -129,8 +133,9 @@ namespace NppXmlTreeviewPlugin.Parsers
                     }
                 }
             }
-            catch
+            catch(Exception exception)
             {
+                logger.Warning(exception, exception.Message);
                 nppXmlNode = null;
                 return false;
             }
