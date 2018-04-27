@@ -1,5 +1,7 @@
 ﻿using System.IO;
 
+using FluentAssertions;
+
 using Xunit;
 
 namespace NppXmlTreeviewPlugin.Parsers.Tests.Unit
