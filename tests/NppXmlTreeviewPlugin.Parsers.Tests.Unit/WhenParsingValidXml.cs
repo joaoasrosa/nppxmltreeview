@@ -9,13 +9,15 @@ namespace NppXmlTreeviewPlugin.Parsers.Tests.Unit
     public class WhenParsingValidXml
     {
         [Theory]
-        [InlineData(@"./NPP_comments.xml")]
-        [InlineData(@"./NPP_nocomments.xml")]
+        [InlineData(@"./TestFiles/NPP_comments.xml")]
+        [InlineData(@"./Test/FilesNPP_nocomments.xml")]
         public void GivenValidXml_ThenFoo(string path)
         {
             var xml = File.ReadAllText(path);
 
-            var result = NppXmlNode.TryParse(xml, out var nppXmlNode);
+            NppXmlNode nppXmlNode;
+
+            var result = NppXmlNode.TryParse(xml, out nppXmlNode);
 
             result.Should().BeTrue();
         }
