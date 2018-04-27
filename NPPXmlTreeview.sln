@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{0B3B9BE3
 		VersionInfo.cs = VersionInfo.cs
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2800F860-8256-4EF2-BB05-C64D0039617D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E56F6E12-089C-40ED-BCFD-923E5FA121A1} = {2800F860-8256-4EF2-BB05-C64D0039617D}
+		{EABA4132-6E8C-41EC-B6F0-666EFCA5439A} = {2800F860-8256-4EF2-BB05-C64D0039617D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61C37722-AAD8-4166-A3F3-7F48A5C49BFC}
