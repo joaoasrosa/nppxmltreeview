@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NppXmlTreeviewPlugin.Parsers.Tests.Unit")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A Notepad++ TreeView plugin")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("João Rosa")]
 [assembly: AssemblyProduct("NppXmlTreeviewPlugin.Parsers.Tests.Unit")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright © João Rosa 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

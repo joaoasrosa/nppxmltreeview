@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("João Rosa")]
 [assembly: AssemblyProduct("NppXmlTreeviewPlugin")]
-[assembly: AssemblyCopyright("Copyright © João Rosa 2016")]
+[assembly: AssemblyCopyright("Copyright © João Rosa 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
