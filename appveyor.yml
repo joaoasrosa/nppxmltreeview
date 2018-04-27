@@ -1,31 +1,8 @@
-version: 1.6.0.{build}
-skip_tags: true
-os: Visual Studio 2017
-
-platform:
-    - x86
-    - x64
-
-configuration: Release
-assembly_info:
-  patch: true
-  file: '**\VersionInfo.*'
-  assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
-before_build:
-- cmd: '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"'
-- nuget restore
-build:
-  verbosity: minimal
-after_build:
-- ps: >-
-    if ($env:PLATFORM -eq "x64") {
-        7z a NppXMLTreeviewPlugin_$env:PLATFORM.zip c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\$env:PLATFORM\Release\NppXmlTreeviewPlugin.dll c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\$env:PLATFORM\Release\NppXmlTreeviewPlugin
-    }
-    if ($env:PLATFORM -eq "x86") {
-        7z a NppXMLTreeviewPlugin_$env:PLATFORM.zip c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\Release\NppXmlTreeviewPlugin.dll c:\projects\NppXmlTreeview\src\NppXmlTreeviewPlugin\bin\Release\NppXmlTreeviewPlugin
-    }
+version: '{build}'
+image: Visual Studio 2017
+build_script:
+- ps: .\build.ps1 --target=AppVeyor --configuration=Release
+test: off
 artifacts:
 - path: NppXmlTreeviewPlugin_*.zip
   name: nppxmltreeview
