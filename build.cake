@@ -179,6 +179,9 @@ Task("Test-Unit")
 	{ 
 		var unitTestsProjects = $"./tests/**/bin/{configuration}/**/*.Tests.Unit.dll";
 		Test(unitTestsProjects); 
+
+		unitTestsProjects = $"./tests/**/bin/x64/{configuration}/**/*.Tests.Unit.dll";
+		Test(unitTestsProjects); 
 	});
 
 Task("Dependencies-Analyse")
