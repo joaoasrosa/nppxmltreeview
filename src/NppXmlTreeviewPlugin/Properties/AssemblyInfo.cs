@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -20,3 +20,7 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("31492674-6fe0-485c-91f0-2e17244588ff")]
+
+[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyInformationalVersion("0.1.0-Cake-2.1+46.Branch.Cake_2.Sha.ee47094be49e845ce4b291a3f47ff12ae97fe275")]
+[assembly: AssemblyFileVersion("0.1.0.0")]
