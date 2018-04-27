@@ -12,6 +12,7 @@ namespace NppXmlTreeviewPlugin.Parsers
     public class NppXmlNode
     {
         private static int nodeId = 1;
+        private readonly List<NppXmlNode> _childNodes;
 
         /// <summary>
         /// The default constructor for the class.
@@ -22,8 +23,9 @@ namespace NppXmlTreeviewPlugin.Parsers
         {
             this.Name = name;
             this.StartPosition = startPosition;
-            this.ChildNodes = new List<NppXmlNode>();
             this.Id = nodeId;
+            _childNodes = new List<NppXmlNode>();
+
             nodeId++;
         }
 
@@ -37,9 +39,10 @@ namespace NppXmlTreeviewPlugin.Parsers
         {
             this.Name = name;
             this.StartPosition = startPosition;
-            this.ChildNodes = new List<NppXmlNode>();
             this.Parent = parent;
             this.Id = nodeId;
+            _childNodes = new List<NppXmlNode>();
+
             nodeId++;
         }
 
@@ -162,7 +165,7 @@ namespace NppXmlTreeviewPlugin.Parsers
                     }
 
                     var sibling = new NppXmlNode(xmlTextReader.Name, new NppXmlNodePosition(xmlTextReader), node.Parent);
-                    node.Parent.ChildNodes.Add(sibling);
+                    node.Parent.AddNode(sibling);
 
                     // Can be a single node.
                     sibling.EndPosition = new NppXmlNodePosition(xmlTextReader, true);
@@ -181,7 +184,7 @@ namespace NppXmlTreeviewPlugin.Parsers
 
                 // It's a child.
                 var child = new NppXmlNode(xmlTextReader.Name, new NppXmlNodePosition(xmlTextReader), node);
-                node.ChildNodes.Add(child);
+                node.AddNode(child);
 
                 // Can be a single node.
                 child.EndPosition = new NppXmlNodePosition(xmlTextReader, true);
@@ -215,7 +218,7 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// <summary>
         /// The childrens of the node.
         /// </summary>
-        public List<NppXmlNode> ChildNodes { get; }
+        public IReadOnlyCollection<NppXmlNode> ChildNodes => _childNodes;
 
         /// <summary>
         /// The parent of the node.
@@ -226,5 +229,10 @@ namespace NppXmlTreeviewPlugin.Parsers
         /// Flag to indicate if the node has child nodes.
         /// </summary>
         public bool HasChildNodes => this.ChildNodes.Any();
+
+        private void AddNode(NppXmlNode node)
+        {
+            _childNodes.Add(node);
+        }
     }
 }
