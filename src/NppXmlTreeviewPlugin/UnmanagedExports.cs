@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Specialized;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Web.UI.Design.WebControls;
-using System.Windows.Forms;
+
 using NppPlugin.DllExport;
 using NppPluginNET;
 

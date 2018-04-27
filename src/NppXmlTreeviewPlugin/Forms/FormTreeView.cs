@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using NppPluginNET;
@@ -415,9 +414,6 @@ namespace NppXmlTreeviewPlugin.Forms
         /// <returns>The document text.</returns>
         private static string GetDocumentText(IntPtr currentScintilla)
         {
-#if DEBUG
-            return File.ReadAllText("debug.xml");
-#endif
             var length = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
             var sb = new byte[length];
 
