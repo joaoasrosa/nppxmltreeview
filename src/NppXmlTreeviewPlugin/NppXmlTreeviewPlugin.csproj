@@ -69,9 +69,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\VersionInfo.cs">
-      <Link>VersionInfo.cs</Link>
-    </Compile>
     <Compile Include="DllExport\DllExportAttribute.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Forms\FormAbout.cs">

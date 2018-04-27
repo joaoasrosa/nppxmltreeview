@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -24,3 +24,7 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("NppXmlTreeviewPlugin.Tests")]
 
+
+[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyInformationalVersion("0.1.0-Cake-2.1+41.Branch.Cake_2.Sha.cdec1d41e952ae791f55deece980eabfb9b244a4")]
+[assembly: AssemblyFileVersion("0.1.0.0")]

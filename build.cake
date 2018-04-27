@@ -161,22 +161,6 @@ Task("SemVer")
         };
 
         gitVersion = GitVersion(settings);
-
-        Information("Full SemVer: " + gitVersion.FullSemVer);
-        Information("Major Minor Patch: " + gitVersion.MajorMinorPatch);
-        
-        var csProjects = GetFiles("**/*.csproj");
-
-        foreach(var project in csProjects)
-        {
-            Information("Applying SemVer to '{0}'...", project);
-
-            XmlPoke(project, "/Project/PropertyGroup/AssemblyVersion", gitVersion.MajorMinorPatch);
-            XmlPoke(project, "/Project/PropertyGroup/FileVersion", gitVersion.MajorMinorPatch);
-            XmlPoke(project, "/Project/PropertyGroup/Version", gitVersion.FullSemVer);
-            
-            Information("SemVer applied to '{0}'...", project);
-        }
     });
 
 Task("Build")

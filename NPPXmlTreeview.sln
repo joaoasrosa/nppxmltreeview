@@ -19,7 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{0B3B9BE3
 		build.cake = build.cake
 		build.ps1 = build.ps1
 		build.sh = build.sh
-		VersionInfo.cs = VersionInfo.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2800F860-8256-4EF2-BB05-C64D0039617D}"
