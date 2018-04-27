@@ -148,12 +148,12 @@
   <PropertyGroup>
     <PostBuildEvent>MKDIR NppXmlTreeviewPlugin
 XCOPY /Y NppXmlTreeviewPlugin.Parsers.dll NppXmlTreeviewPlugin
+XCOPY /Y Serilog*.dll NppXmlTreeviewPlugin
 DEL /F NppXmlTreeviewPlugin.Parsers.*
 DEL /F NppXmlTreeviewPlugin.exp
 DEL /F NppXmlTreeviewPlugin.lib
 DEL /F NppXmlTreeviewPlugin.pssym
-
-</PostBuildEvent>
+DEL /F Serilog*</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

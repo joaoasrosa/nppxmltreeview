@@ -25,7 +25,7 @@ namespace NppXmlTreeviewPlugin.Forms
             InitializeComponent();
 
             _logger = new LoggerConfiguration()
-                      .WriteTo.RollingFile("log-{Date}.txt")
+                      .WriteTo.RollingFile(@"./plugins/NppXmlTreeviewPlugin/logs/log-{Date}.txt")
                       .CreateLogger();
 
             this.TooltipButtonToogle.SetToolTip(this.ButtonToggle, "Collapse treeview");
