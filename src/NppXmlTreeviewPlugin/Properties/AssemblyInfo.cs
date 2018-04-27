@@ -22,5 +22,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("31492674-6fe0-485c-91f0-2e17244588ff")]
 
 [assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyInformationalVersion("0.1.0-Cake-2.1+41.Branch.Cake_2.Sha.cdec1d41e952ae791f55deece980eabfb9b244a4")]
+[assembly: AssemblyInformationalVersion("0.1.0-Cake-2.1+42.Branch.Cake_2.Sha.2ae9ef6d57f671dfb1d3ded7914c16afc57b7da7")]
 [assembly: AssemblyFileVersion("0.1.0.0")]

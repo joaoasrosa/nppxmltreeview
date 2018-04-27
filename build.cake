@@ -32,8 +32,17 @@ var artifactsDir = Directory("./artifacts");
 var dotNetCoreVerbosity = Cake.Common.Tools.DotNetCore.DotNetCoreVerbosity.Detailed;
 if (!Enum.TryParse(verbosity, true, out dotNetCoreVerbosity))
 {	
-    Warning("Verbosity could not be parsed into type 'Cake.Common.Tools.DotNetCore.DotNetCoreVerbosity'. Defaulting to {0}", 
+    Warning(
+		"Verbosity could not be parsed into type 'Cake.Common.Tools.DotNetCore.DotNetCoreVerbosity'. Defaulting to {0}", 
         dotNetCoreVerbosity); 
+}
+
+var msBuildVerbosity = Cake.Core.Diagnostics.Verbosity.Diagnostic;
+if (!Enum.TryParse(verbosity, true, out msBuildVerbosity))
+{	
+	Warning(
+		"Verbosity could not be parsed into type 'Cake.Core.Diagnostics.Verbosity'. Defaulting to {0}", 
+		msBuildVerbosity); 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -58,26 +67,22 @@ void Test(FilePathCollection testProjects)
 	}
 }
 
-void Build(string project, string runtime)
+void Build(PlatformTarget platformTarget)
 {
-	var msBuildSettings = new DotNetCoreMSBuildSettings 
-    {
-        TreatAllWarningsAs = MSBuildTreatAllWarningsAs.Error,
-		ToolVersion = MSBuildVersion.MSBuild14,
-        Verbosity = dotNetCoreVerbosity
-    };
+	var settings = new MSBuildSettings 
+	{
+		Verbosity = msBuildVerbosity,
+		Configuration = configuration,
+		PlatformTarget = platformTarget,
+		ToolVersion = MSBuildToolVersion.VS2015
+	};
 
-    var settings = new DotNetCoreBuildSettings 
-    {
-        Configuration = configuration,
-        MSBuildSettings = msBuildSettings,
-		NoRestore = true,
-		Runtime = runtime
-    };
-
-    Information("Building '{0}'...", project);
-    DotNetCoreBuild(project, settings);
-    Information("'{0}' has been built.", project);
+	foreach(var solution in solutions)
+	{
+		Information("Building '{0}'...", solution.FullPath);
+		MSBuild(solution.FullPath, settings);
+		Information("'{0}' has been built.", solution.FullPath);
+	}
 }
 
 void Pack(string directory, string outputFile)
@@ -160,16 +165,17 @@ Task("SemVer")
             UpdateAssemblyInfo = true
         };
 
+		Information("Applying SemVer.");
         gitVersion = GitVersion(settings);
+		Information("SemVer has been applied.");
     });
 
 Task("Build")
 	.Description("Builds all the different parts of the project.")
 	.Does(() => 
     {
-		var project = "./src/NppXmlTreeviewPlugin/NppXmlTreeviewPlugin.csproj";
-        Build(project, "win-x86");
-        Build(project, "win-x64");
+		Build(PlatformTarget.MSIL);
+		Build(PlatformTarget.x64);
     });
 
 Task("Test-Unit")
