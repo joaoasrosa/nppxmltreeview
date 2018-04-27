@@ -394,6 +394,27 @@ namespace NppXmlTreeviewPlugin.Forms
             this._workerIsRunning = true;
         }
 
+        private void tagNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            attributeToolStripMenuItem.Checked = false;
+            tagNameToolStripMenuItem.Checked = true;
+            attributeNameTextBox.Enabled = false;
+            UpdateUserInterface();
+        }
+
+        private void attributeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            attributeToolStripMenuItem.Checked = true;
+            tagNameToolStripMenuItem.Checked = false;
+            attributeNameTextBox.Enabled = true;
+            UpdateUserInterface();
+        }
+
+        private void attributeNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateUserInterface();
+        }
+
         #endregion
 
         #region PRIVATE STATIC METHODS
@@ -470,26 +491,5 @@ namespace NppXmlTreeviewPlugin.Forms
         private delegate void SetTreeviewSelectionDelegate(string id);
 
         #endregion
-
-        private void tagNameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            attributeToolStripMenuItem.Checked = false;
-            tagNameToolStripMenuItem.Checked = true;
-            attributeNameTextBox.Enabled = false;
-            UpdateUserInterface();
-        }
-
-        private void attributeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            attributeToolStripMenuItem.Checked = true;
-            tagNameToolStripMenuItem.Checked = false;
-            attributeNameTextBox.Enabled = true;
-            UpdateUserInterface();
-        }
-
-        private void attributeNameTextBox_TextChanged(object sender, EventArgs e)
-        {
-            UpdateUserInterface();
-        }
     }
 }
