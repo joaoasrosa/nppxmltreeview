@@ -60,5 +60,11 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NppXmlTreeviewPlugin.Parsers\NppXmlTreeviewPlugin.Parsers.csproj">
+      <Project>{eaba4132-6e8c-41ec-b6f0-666efca5439a}</Project>
+      <Name>NppXmlTreeviewPlugin.Parsers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
