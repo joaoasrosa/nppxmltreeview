@@ -7,6 +7,8 @@ using NppPluginNET;
 using NppXmlTreeviewPlugin.Parsers;
 using NppXmlTreeviewPlugin.Properties;
 
+using Serilog;
+
 namespace NppXmlTreeviewPlugin.Forms
 {
     public partial class FormTreeView : Form
@@ -14,12 +16,17 @@ namespace NppXmlTreeviewPlugin.Forms
         private bool _expanded;
         private bool _workerIsRunning;
         private NppXmlNode _rootNode;
+        private readonly ILogger _logger;
 
         #region CONSTRUCTORS
 
         public FormTreeView()
         {
             InitializeComponent();
+
+            _logger = new LoggerConfiguration()
+                      .WriteTo.RollingFile(@"./plugins/NppXmlTreeviewPlugin/logs/log-{Date}.txt")
+                      .CreateLogger();
 
             this.TooltipButtonToogle.SetToolTip(this.ButtonToggle, "Collapse treeview");
 
@@ -106,7 +113,7 @@ namespace NppXmlTreeviewPlugin.Forms
             string attributeName = attributeNameTextBox.Enabled ? attributeNameTextBox.Text : null;
 
             // Do validations.
-            if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), out this._rootNode, attributeName))
+            if (!NppXmlNode.TryParse(GetDocumentText(PluginBase.GetCurrentScintilla()), attributeName, _logger, out this._rootNode))
             {
                 if (this.LabelStatus.InvokeRequired)
                 {
@@ -394,6 +401,27 @@ namespace NppXmlTreeviewPlugin.Forms
             this._workerIsRunning = true;
         }
 
+        private void tagNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            attributeToolStripMenuItem.Checked = false;
+            tagNameToolStripMenuItem.Checked = true;
+            attributeNameTextBox.Enabled = false;
+            UpdateUserInterface();
+        }
+
+        private void attributeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            attributeToolStripMenuItem.Checked = true;
+            tagNameToolStripMenuItem.Checked = false;
+            attributeNameTextBox.Enabled = true;
+            UpdateUserInterface();
+        }
+
+        private void attributeNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateUserInterface();
+        }
+
         #endregion
 
         #region PRIVATE STATIC METHODS
@@ -470,26 +498,5 @@ namespace NppXmlTreeviewPlugin.Forms
         private delegate void SetTreeviewSelectionDelegate(string id);
 
         #endregion
-
-        private void tagNameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            attributeToolStripMenuItem.Checked = false;
-            tagNameToolStripMenuItem.Checked = true;
-            attributeNameTextBox.Enabled = false;
-            UpdateUserInterface();
-        }
-
-        private void attributeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            attributeToolStripMenuItem.Checked = true;
-            tagNameToolStripMenuItem.Checked = false;
-            attributeNameTextBox.Enabled = true;
-            UpdateUserInterface();
-        }
-
-        private void attributeNameTextBox_TextChanged(object sender, EventArgs e)
-        {
-            UpdateUserInterface();
-        }
     }
 }

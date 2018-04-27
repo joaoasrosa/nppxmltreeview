@@ -75,6 +75,12 @@ void Pack(string directory, string outputFile)
 	DeleteFiles(directoryToClean);	
     Information("'{0}' has been cleaned.", directoryToClean);
 
+	directoryToClean = string.Format("{0}*.xml", directory);
+
+    Information("Cleaning '{0}'...", directoryToClean);
+	DeleteFiles(directoryToClean);	
+    Information("'{0}' has been cleaned.", directoryToClean);
+
     Information("Compressing '{0}' to '{1}'...", directory, outputFile);
 	Zip(directory, outputFile);	
     Information("'{0}' has been compressed to '{1}'.", directory, outputFile);
@@ -83,6 +89,12 @@ void Pack(string directory, string outputFile)
 void CopyPlugin(string source, string destination)
 {
 	var directoryToClean = string.Format("{0}*.pdb", source);
+
+    Information("Cleaning '{0}'...", directoryToClean);
+	DeleteFiles(directoryToClean);	
+    Information("'{0}' has been cleaned.", directoryToClean);
+
+	directoryToClean = string.Format("{0}*.xml", source);
 
     Information("Cleaning '{0}'...", directoryToClean);
 	DeleteFiles(directoryToClean);	

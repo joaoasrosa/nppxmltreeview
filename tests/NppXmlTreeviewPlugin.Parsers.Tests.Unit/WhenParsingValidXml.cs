@@ -2,6 +2,8 @@
 
 using FluentAssertions;
 
+using NppXmlTreeviewPlugin.Parsers.Tests.Unit.Stubs;
+
 using Xunit;
 
 namespace NppXmlTreeviewPlugin.Parsers.Tests.Unit
@@ -17,7 +19,7 @@ namespace NppXmlTreeviewPlugin.Parsers.Tests.Unit
 
             NppXmlNode nppXmlNode;
 
-            var result = NppXmlNode.TryParse(xml, out nppXmlNode);
+            var result = NppXmlNode.TryParse(xml, new LoggerStub(), out nppXmlNode);
 
             result.Should().BeTrue(because: "the XML is valid");
         }
@@ -31,7 +33,7 @@ namespace NppXmlTreeviewPlugin.Parsers.Tests.Unit
 
             NppXmlNode nppXmlNode;
 
-            NppXmlNode.TryParse(xml, out nppXmlNode);
+            NppXmlNode.TryParse(xml, new LoggerStub(), out nppXmlNode);
 
             nppXmlNode.ChildNodes.Count.Should().Be(nodeCount, because: $"the number of child nodes is {nodeCount}");
         }
