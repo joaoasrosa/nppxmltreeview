@@ -7,6 +7,8 @@ using NppPluginNET;
 using NppXmlTreeviewPlugin.Parsers;
 using NppXmlTreeviewPlugin.Properties;
 
+using Serilog;
+
 namespace NppXmlTreeviewPlugin.Forms
 {
     public partial class FormTreeView : Form
@@ -14,12 +16,17 @@ namespace NppXmlTreeviewPlugin.Forms
         private bool _expanded;
         private bool _workerIsRunning;
         private NppXmlNode _rootNode;
+        private readonly ILogger _logger;
 
         #region CONSTRUCTORS
 
         public FormTreeView()
         {
             InitializeComponent();
+
+            _logger = new LoggerConfiguration()
+                      .WriteTo.RollingFile("log-{Date}.txt")
+                      .CreateLogger();
 
             this.TooltipButtonToogle.SetToolTip(this.ButtonToggle, "Collapse treeview");
 
