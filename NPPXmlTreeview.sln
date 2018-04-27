@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NppXmlTreeviewPlugin", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NppXmlTreeviewPlugin.Parsers", "src\NppXmlTreeviewPlugin.Parsers\NppXmlTreeviewPlugin.Parsers.csproj", "{EABA4132-6E8C-41EC-B6F0-666EFCA5439A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NppXmlTreeviewPlugin.Tests", "tests\NppXmlTreeviewPlugin.Tests\NppXmlTreeviewPlugin.Tests.csproj", "{8528055D-DBCD-4875-AC86-B40FF06345B1}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{0B3B9BE3-29A4-494C-A373-E104940FB537}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
@@ -58,18 +56,6 @@ Global
 		{EABA4132-6E8C-41EC-B6F0-666EFCA5439A}.Release|x64.Build.0 = Release|x64
 		{EABA4132-6E8C-41EC-B6F0-666EFCA5439A}.Release|x86.ActiveCfg = Release|Any CPU
 		{EABA4132-6E8C-41EC-B6F0-666EFCA5439A}.Release|x86.Build.0 = Release|Any CPU
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Debug|x64.ActiveCfg = Debug|x64
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Debug|x64.Build.0 = Debug|x64
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Debug|x86.Build.0 = Debug|Any CPU
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Release|x64.ActiveCfg = Release|x64
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Release|x64.Build.0 = Release|x64
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Release|x86.ActiveCfg = Release|Any CPU
-		{8528055D-DBCD-4875-AC86-B40FF06345B1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
