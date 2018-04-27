@@ -1,4 +1,5 @@
 #tool "nuget:?package=GitVersion.CommandLine"
+#tool "nuget:?package=xunit.runner.console&version=2.3.1"
 #addin "nuget:?package=Cake.DependenciesAnalyser&version=2.0.0"
 
 ///////////////////////////////////////////////////////////////////////////////
