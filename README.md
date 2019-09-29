@@ -16,3 +16,7 @@ Plugin based on [Notepad++ C# template](http://sourceforge.net/projects/sourceco
 [PostSharp](https://www.postsharp.net/) supports this project with a OSS license.
 
 The plugin use the icons from the project [p.yusukekamiyamane](http://p.yusukekamiyamane.com/).
+
+## New owner wanted
+
+This project is looking for a new owner! At the moment I can't support it anymore. However, I believe that it is an valuable plugin to the community!
