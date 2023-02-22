@@ -16,7 +16,7 @@ namespace NppXmlTreeviewPlugin
     class Main
     {
         #region " Fields "
-        internal const string PluginName = "Npp Xml Treview";
+        internal const string PluginName = "Npp Xml Treeview";
         static string iniFilePath = null;
         static bool someSetting = false;
         public static FormTreeView frmMyDlg = null;
